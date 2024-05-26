@@ -4,6 +4,7 @@ from pyman.build import build as build_
 from pyman.init import init as init_, check_in_options
 from pyman.clean import clean as clean_
 from pyman.run import run as run_
+from pyman.fmt import fmt as fmt_, fmtallc as fmtc_
 
 FORMAT = "{:,.3f}"
 
@@ -24,6 +25,14 @@ def need_some_arguments(n: int) -> bool:
         print(f"> need at least {n} command line arguments")
         return True
     return False
+
+
+def fmt() -> int:
+    return fmt_()
+
+
+def fmtc() -> int:
+    return fmtc_()
 
 
 def build() -> int:
@@ -73,12 +82,14 @@ def main():
     command = sys.argv[1]
     result = check_in_options(
         tag="command",
-        options=["init", "build", "run", "clean", "rebuild"],
+        options=["fmtc", "fmt", "init", "build", "run", "clean", "rebuild"],
         value=command,
     )
     if result is None:
         return 1
     match command:
+        case "fmtc":
+            return fmtc()
         case "build":
             return build()
         case "run":
@@ -91,6 +102,8 @@ def main():
             return 0
         case "rebuild":
             return rebuild()
+        case "fmt":
+            return fmt()
 
 
 if __name__ == "__main__":
