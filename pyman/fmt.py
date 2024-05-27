@@ -39,8 +39,8 @@ def fmt() -> int:
 
 def fmtallc() -> int:
     print("Formatting c files...")
-    fmtc("Muza/source", ".c")
-    fmtc("Muza/include", ".h")
+    fmtc("Muza/Source", ".c")
+    fmtc("Muza/Include", ".h")
     return 0
 
 

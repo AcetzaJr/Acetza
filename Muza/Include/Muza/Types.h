@@ -42,6 +42,8 @@ typedef u64 MzCountT;
 
 typedef u64 MzDepthT;
 
+typedef u64 MzNoteT;
+
 typedef MzSampleT (*MzPrimitiveF)(MzPartT part);
 
 typedef MzAmplitudeT (*MzTransformerF)(MzPartT part);
