@@ -42,7 +42,7 @@ void MzWaveAddF(MzWaveZ *waveP, MzWaveZ *otherP, MzTimeT timeP,
 
 // IO
 
-void MzWaveSaveF(MzWaveZ *wave, const char *pathP);
+void MzWaveSaveF(MzWaveZ *waveP, const char *pathP);
 
 // FrameRate
 
