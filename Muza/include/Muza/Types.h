@@ -32,6 +32,10 @@ typedef u64 MzFramesT;
 
 typedef u64 MzIndexT;
 
+typedef u64 MzFrameT;
+
+typedef u64 MzChannelT;
+
 typedef u64 MzSizeT;
 
 typedef u64 MzCountT;

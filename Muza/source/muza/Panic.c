@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void AzPanic(int code, const char *message, ...) {
+void MzPanic(int code, const char *message, ...) {
   printf("> Panic: ");
   va_list args;
   va_start(args, message);
