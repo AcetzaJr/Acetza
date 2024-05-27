@@ -31,7 +31,7 @@ void MzEnveloperCopyF(MzEnveloperZ *enveloperP, MzEnveloperZ *fromP) {
 void MzEnveloperWaveF(MzEnveloperZ *enveloperP, MzWaveZ *waveP) {
   MzBlockWaveF(enveloperP->blockM, waveP);
   MzDurationT durationL = MzWaveDurationF(waveP);
-  MzUntilZ untilL = MzUntilReleaseP(enveloperP, waveP, durationL);
+  MzUntilZ untilL = MzUntilReleaseF(enveloperP, waveP, durationL);
   MzTransformF(waveP, enveloperP->releaseTransformerM, untilL.timeM,
                untilL.amplitudeM, durationL, 0.0, durationL);
 }

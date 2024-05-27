@@ -36,6 +36,6 @@ MzFrequencyT MzScalePowerF(MzNoteT noteP, MzCountT countP) {
 }
 
 MzFrequencyT MzScaleFrequencyF(MzScaleZ *scaleP, MzNoteT noteP) {
-  return scaleP->baseM * MzPosModU64F(noteP, scaleP->countM) *
+  return scaleP->baseM * MzPosModi64F(noteP, scaleP->countM) *
          pow(2, MzScalePowerF(noteP, scaleP->countM));
 }
