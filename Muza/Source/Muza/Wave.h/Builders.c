@@ -4,24 +4,25 @@
 
 #include <stdlib.h>
 
-void MzWaveWithDurationF(MzWaveZ *wave, MzDurationT duration,
-                         MzChannelsT channels, MzFrameRateT frameRate) {
-  wave->frames = MzTimeToFrameF(duration, frameRate);
-  wave->channelsM = channels;
-  wave->frameRateM = frameRate;
-  MzSizeT size = sizeof(MzSampleT) * wave->frames * channels;
-  if (size == 0) {
-    wave->samples = NULL;
+void MzWaveWithDurationF(MzWaveZ *waveP, MzDurationT durationP,
+                         MzChannelsT channelsP, MzFrameRateT frameRateP) {
+  waveP->framesM = MzTimeToFrameF(durationP, frameRateP);
+  waveP->channelsM = channelsP;
+  waveP->frameRateM = frameRateP;
+  MzSizeT sizeL = sizeof(MzSampleT) * waveP->framesM * channelsP;
+  if (sizeL == 0) {
+    waveP->samplesM = NULL;
     return;
   }
-  wave->samples = malloc(size);
+  waveP->samplesM = malloc(sizeL);
 }
 
-void MzWaveEmptyF(MzWaveZ *wave, MzChannelsT channels, MzFrameRateT frameRate) {
-  wave->frames = 0;
-  wave->channelsM = channels;
-  wave->frameRateM = frameRate;
-  wave->samples = NULL;
+void MzWaveEmptyF(MzWaveZ *waveP, MzChannelsT channelsP,
+                  MzFrameRateT frameRateP) {
+  waveP->framesM = 0;
+  waveP->channelsM = channelsP;
+  waveP->frameRateM = frameRateP;
+  waveP->samplesM = NULL;
 }
 
-void MzWaveFreeF(MzWaveZ *wave) { free(wave->samples); }
+void MzWaveFreeF(MzWaveZ *waveP) { free(waveP->samplesM); }

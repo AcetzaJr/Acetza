@@ -26,7 +26,7 @@ void MzBasicCopyF(MzBasicZ *basicP, MzBasicZ *fromP) {
 void MzBasicWaveF(MzBasicZ *basicP, MzWaveZ *waveP) {
   MzWaveWithDurationF(waveP, basicP->durationM, basicP->channelsM,
                       basicP->frameRateM);
-  for (MzIndexT frameL = 0; frameL < waveP->frames; ++frameL) {
+  for (MzIndexT frameL = 0; frameL < waveP->framesM; ++frameL) {
     MzTimeT timeL = MzFrameToTimeF(frameL, waveP->frameRateM);
     MzPartT partL = fmod(timeL * basicP->frequencyM, 1.0);
     MzSampleT sampleL = basicP->primitiveM(partL) * basicP->amplitudeM;

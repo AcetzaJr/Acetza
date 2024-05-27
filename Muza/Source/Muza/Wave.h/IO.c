@@ -6,19 +6,20 @@
 #include <sndfile-64.h>
 #include <stddef.h>
 
-void MzWaveSaveF(MzWaveZ *wave, const char *path) {
-  SF_INFO info;
-  info.samplerate = (int)wave->frameRateM;
-  info.channels = (int)wave->channelsM;
-  info.format = SF_FORMAT_WAV | SF_FORMAT_DOUBLE;
-  SNDFILE *file = sf_open(path, SFM_WRITE, &info);
-  if (file == NULL) {
-    MzPanicF(1, "file %s could not be opened", path);
+void MzWaveSaveF(MzWaveZ *waveP, const char *pathP) {
+  SF_INFO infoL;
+  infoL.samplerate = (int)waveP->frameRateM;
+  infoL.channels = (int)waveP->channelsM;
+  infoL.format = SF_FORMAT_WAV | SF_FORMAT_DOUBLE;
+  SNDFILE *fileL = sf_open(pathP, SFM_WRITE, &infoL);
+  if (fileL == NULL) {
+    MzPanicF(1, "file %s could not be opened", pathP);
   }
-  u64T written =
-      sf_writef_double(file, wave->samples, (sf_count_t)wave->frames);
-  if (written != wave->frames) {
-    MzPanicF(1, "%ld frames written but %ld requested", written, wave->frames);
+  u64T writtenL =
+      sf_writef_double(fileL, waveP->samplesM, (sf_count_t)waveP->framesM);
+  if (writtenL != waveP->framesM) {
+    MzPanicF(1, "%ld frames written but %ld requested", writtenL,
+             waveP->framesM);
   }
-  sf_close(file);
+  sf_close(fileL);
 }

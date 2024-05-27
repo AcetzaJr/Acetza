@@ -2,10 +2,10 @@
 
 #include "Muza/Types.h"
 
-MzIndexT MzTimeToFrameF(MzTimeT time, MzFrameRateT frameRate) {
-  return (MzIndexT)(time * ((MzTimeT)frameRate));
+MzIndexT MzTimeToFrameF(MzTimeT timeP, MzFrameRateT frameRateP) {
+  return (MzIndexT)(timeP * ((MzTimeT)frameRateP));
 }
 
-MzTimeT MzFrameToTimeF(MzIndexT frame, MzFrameRateT frameRate) {
-  return ((MzTimeT)frame) / ((MzTimeT)frameRate);
+MzTimeT MzFrameToTimeF(MzIndexT frameP, MzFrameRateT frameRateP) {
+  return ((MzTimeT)frameP) / ((MzTimeT)frameRateP);
 }
