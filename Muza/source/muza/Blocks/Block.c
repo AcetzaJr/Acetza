@@ -7,6 +7,13 @@
 #include "Muza/Types.h"
 #include "Muza/Wave.h"
 
+MzBlockZ MzBlockR = {.block = &MzBasicR, .type = MzBasicK};
+
+void MzBlockCopy(MzBlockZ *block, MzBlockZ *from) {
+  block->block = from->block;
+  block->type = from->type;
+}
+
 void MzBlockTypeNotRecognizedPanic(MzBlockTypeE type) {
   MzPanic(1, "waver type with code '%d' not recognized", type);
 }
@@ -41,6 +48,7 @@ MzFrequencyT MzBlockFrequency(MzBlockZ *block) {
     return MzHarmonizerFrequency(block->block);
   }
   MzBlockTypeNotRecognizedPanic(block->type);
+  return 0;
 }
 
 void MzBlockSetFrequency(MzBlockZ *block, MzFrequencyT frequency) {

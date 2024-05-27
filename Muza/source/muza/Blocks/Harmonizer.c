@@ -2,8 +2,18 @@
 #include "Muza/Blocks/Harmonizer.h"
 
 #include "Muza/Blocks/Block.h"
+#include "Muza/Functions/Numberers.h"
 #include "Muza/Types.h"
 #include "Muza/Wave.h"
+
+MzHarmonizerZ MzHarmonizerR = {
+    .block = &MzBlockR, .depth = 7, .numberer = MzNumberersSaw};
+
+void MzHarmonizerCopy(MzHarmonizerZ *harmonizer, MzHarmonizerZ *from) {
+  harmonizer->block = from->block;
+  harmonizer->depth = from->depth;
+  harmonizer->numberer = from->numberer;
+}
 
 void MzHarmonizerWave(MzHarmonizerZ *harmonizer, MzWaveZ *wave) {
   MzBlockWave(harmonizer->block, wave);

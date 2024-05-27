@@ -10,6 +10,10 @@ typedef struct {
   MzNumbererF numberer;
 } MzHarmonizerZ;
 
+extern MzHarmonizerZ MzHarmonizerR;
+
+void MzHarmonizerCopy(MzHarmonizerZ *harmonizer, MzHarmonizerZ *from);
+
 void MzHarmonizerWave(MzHarmonizerZ *harmonizer, MzWaveZ *wave);
 
 MzFrequencyT MzHarmonizerFrequency(MzHarmonizerZ *harmonizer);

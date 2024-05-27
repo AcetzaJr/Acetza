@@ -16,6 +16,10 @@ typedef struct {
   MzTransformerF releaseTransformer;
 } MzEnveloperZ;
 
+extern MzEnveloperZ MzEnveloperR;
+
+void MzEnveloperCopy(MzEnveloperZ *enveloper, MzEnveloperZ *from);
+
 void MzEnveloperWave(MzEnveloperZ *enveloper, MzWaveZ *wave);
 
 MzFrequencyT MzEnveloperFrequency(MzEnveloperZ *enveloper);

@@ -10,6 +10,10 @@ typedef struct {
   void *block;
 } MzBlockZ;
 
+extern MzBlockZ MzBlockR;
+
+void MzBlockCopy(MzBlockZ *block, MzBlockZ *from);
+
 void MzBlockWave(MzBlockZ *block, MzWaveZ *wave);
 
 MzFrequencyT MzBlockFrequency(MzBlockZ *block);
