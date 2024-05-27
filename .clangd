@@ -1,0 +1,44 @@
+{
+  "Index": {
+    "Background": "Build"
+  },
+  "Completion": {
+    "AllScopes": true
+  },
+  "InlayHints": {
+    "BlockEnd": "Yes",
+    "Designators": "Yes",
+    "Enabled": "Yes",
+    "ParameterNames": "Yes",
+    "DeducedTypes": "Yes",
+    "TypeNameLimit": 0
+  },
+  "Hover": {
+    "ShowAKA": "Yes"
+  },
+  "Diagnostics": {
+    "UnusedIncludes": "Strict",
+    "MissingIncludes": "Strict",
+    "ClangTidy": {
+      "Add": [
+        "clang-diagnostic-*",
+        "clang-analyzer-*",
+        "llvm-*",
+        "performance-*",
+        "readability-*",
+        "cert-*",
+        "portability-*",
+        "misc-*",
+        "concurrency-*",
+        "google*"
+      ],
+      "Remove": [
+        "readability-magic-numbers",
+        "misc-no-recursion",
+        "concurrency-mt-unsafe",
+        "cert-flp30-c"
+      ],
+      "FastCheckFilter": "None"
+    }
+  }
+}

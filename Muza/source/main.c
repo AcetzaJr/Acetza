@@ -1,7 +1,7 @@
 #include <stdio.h>
 
-#include "muza/measure.h"
+#include "Muza/Measure.h"
 
-void fn(void *) { printf("Hello Muza\n"); }
+void fun(void * /*data*/) { printf("Hello Muza\n"); }
 
-int main() { MzMeasure(fn, NULL); }
+int main() { MzMeasure(fun, NULL); }

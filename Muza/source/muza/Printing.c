@@ -1,4 +1,6 @@
-#include "muza/printing.h"
+#include "Muza/Printing.h"
+
+#include "Muza/Common.h"
 
 #include <stdio.h>
 
