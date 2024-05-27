@@ -4,47 +4,47 @@
 
 typedef struct {
   MzFramesT frames;
-  MzChannelsT channels;
-  MzFrameRateT frameRate;
+  MzChannelsT channelsM;
+  MzFrameRateT frameRateM;
   MzSampleT *samples;
 } MzWaveZ;
 
 // Builders
 
-void MzWaveWithDuration(MzWaveZ *wave, MzDurationT duration,
-                        MzChannelsT channels, MzFrameRateT frameRate);
+void MzWaveWithDurationF(MzWaveZ *wave, MzDurationT duration,
+                         MzChannelsT channels, MzFrameRateT frameRate);
 
-void MzWaveEmpty(MzWaveZ *wave, MzChannelsT channels, MzFrameRateT frameRate);
+void MzWaveEmptyF(MzWaveZ *wave, MzChannelsT channels, MzFrameRateT frameRate);
 
-void MzWaveFree(MzWaveZ *wave);
+void MzWaveFreeF(MzWaveZ *wave);
 
 // GETTERS
 
-MzSampleT *MzWaveSample(MzWaveZ *wave, MzFrameT frame, MzChannelT channel);
+MzSampleT *MzWaveSampleF(MzWaveZ *wave, MzFrameT frame, MzChannelT channel);
 
-MzAmplitudeT MzWaveMax(MzWaveZ *wave);
+MzAmplitudeT MzWaveMaxF(MzWaveZ *wave);
 
-MzDurationT MzWaveDuration(MzWaveZ *wave);
+MzDurationT MzWaveDurationF(MzWaveZ *wave);
 
 // Operations
 
-void MzWaveNormalize(MzWaveZ *wave);
+void MzWaveNormalizeF(MzWaveZ *wave);
 
-void MzWaveMul(MzWaveZ *wave, MzAmplitudeT amplitude);
+void MzWaveMulF(MzWaveZ *wave, MzAmplitudeT amplitude);
 
-void MzWaveResize(MzWaveZ *wave, MzSizeT frames);
+void MzWaveResizeF(MzWaveZ *wave, MzSizeT frames);
 
-void MzWaveResizeFill(MzWaveZ *wave, MzSizeT frames, MzSampleT fill);
+void MzWaveResizeFillF(MzWaveZ *wave, MzSizeT frames, MzSampleT fill);
 
-void MzWaveAdd(MzWaveZ *wave, MzWaveZ *other, MzTimeT time,
-               MzAmplitudeT amplitude);
+void MzWaveAddF(MzWaveZ *wave, MzWaveZ *other, MzTimeT time,
+                MzAmplitudeT amplitude);
 
 // IO
 
-void MzWaveSave(MzWaveZ *wave, const char *path);
+void MzWaveSaveF(MzWaveZ *wave, const char *path);
 
 // FrameRate
 
-MzIndexT MzTimeToFrame(MzTimeT time, MzFrameRateT frameRate);
+MzIndexT MzTimeToFrameF(MzTimeT time, MzFrameRateT frameRate);
 
-MzTimeT MzFrameToTime(MzIndexT frame, MzFrameRateT frameRate);
+MzTimeT MzFrameToTimeF(MzIndexT frame, MzFrameRateT frameRate);

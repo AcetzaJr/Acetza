@@ -7,40 +7,41 @@
 
 #include <math.h>
 
-MzBasicZ MzBasicR = {.primitive = MzPrimitivesSin,
-                     .frequency = 360,
-                     .duration = 1,
-                     .amplitude = 1,
-                     .channels = 2,
-                     .frameRate = 44'100};
+MzBasicZ MzBasicG = {.primitiveM = MzPrimitivesSinF,
+                     .frequencyM = 360,
+                     .durationM = 1,
+                     .amplitudeM = 1,
+                     .channelsM = 2,
+                     .frameRateM = 44'100};
 
-void MzBasicCopy(MzBasicZ *basic, MzBasicZ *from) {
-  basic->primitive = from->primitive;
-  basic->frequency = from->frequency;
-  basic->duration = from->duration;
-  basic->amplitude = from->amplitude;
-  basic->channels = from->channels;
-  basic->frameRate = from->frameRate;
+void MzBasicCopyF(MzBasicZ *basicP, MzBasicZ *fromP) {
+  basicP->primitiveM = fromP->primitiveM;
+  basicP->frequencyM = fromP->frequencyM;
+  basicP->durationM = fromP->durationM;
+  basicP->amplitudeM = fromP->amplitudeM;
+  basicP->channelsM = fromP->channelsM;
+  basicP->frameRateM = fromP->frameRateM;
 }
 
-void MzBasicWave(MzBasicZ *basic, MzWaveZ *wave) {
-  MzWaveWithDuration(wave, basic->duration, basic->channels, basic->frameRate);
-  for (MzIndexT frame = 0; frame < wave->frames; ++frame) {
-    MzTimeT time = MzFrameToTime(frame, wave->frameRate);
-    MzPartT part = fmod(time * basic->frequency, 1.0);
-    MzSampleT sample = basic->primitive(part) * basic->amplitude;
-    for (MzIndexT channel = 0; channel < wave->channels; ++channel) {
-      *MzWaveSample(wave, frame, channel) = sample;
+void MzBasicWaveF(MzBasicZ *basicP, MzWaveZ *waveP) {
+  MzWaveWithDurationF(waveP, basicP->durationM, basicP->channelsM,
+                      basicP->frameRateM);
+  for (MzIndexT frameL = 0; frameL < waveP->frames; ++frameL) {
+    MzTimeT timeL = MzFrameToTimeF(frameL, waveP->frameRateM);
+    MzPartT partL = fmod(timeL * basicP->frequencyM, 1.0);
+    MzSampleT sampleL = basicP->primitiveM(partL) * basicP->amplitudeM;
+    for (MzIndexT channelL = 0; channelL < waveP->channelsM; ++channelL) {
+      *MzWaveSampleF(waveP, frameL, channelL) = sampleL;
     }
   }
 }
 
-MzFrequencyT MzBasicFrequency(MzBasicZ *basic) { return basic->frequency; }
+MzFrequencyT MzBasicFrequencyF(MzBasicZ *basicP) { return basicP->frequencyM; }
 
-void MzBasicSetFrequency(MzBasicZ *basic, MzFrequencyT frequency) {
-  basic->frequency = frequency;
+void MzBasicSetFrequencyF(MzBasicZ *basicP, MzFrequencyT frequencyP) {
+  basicP->frequencyM = frequencyP;
 }
 
-void MzBasicSetDuration(MzBasicZ *basic, MzDurationT duration) {
-  basic->duration = duration;
+void MzBasicSetDurationF(MzBasicZ *basicP, MzDurationT durationP) {
+  basicP->durationM = durationP;
 }

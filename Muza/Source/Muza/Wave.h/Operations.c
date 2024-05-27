@@ -6,26 +6,26 @@
 #include <stdlib.h>
 #include <sys/param.h>
 
-void MzWaveAdd(MzWaveZ *wave, MzWaveZ *other, MzTimeT time,
-               MzAmplitudeT amplitude) {
-  MzIndexT start = MzTimeToFrame(time, wave->frameRate);
+void MzWaveAddF(MzWaveZ *wave, MzWaveZ *other, MzTimeT time,
+                MzAmplitudeT amplitude) {
+  MzIndexT start = MzTimeToFrameF(time, wave->frameRateM);
   MzIndexT end = start + other->frames;
   if (end > wave->frames) {
-    MzWaveResizeFill(wave, end, 0.0);
+    MzWaveResizeFillF(wave, end, 0.0);
   }
-  MzCountT channels = MIN(wave->channels, other->channels);
+  MzCountT channels = MIN(wave->channelsM, other->channelsM);
   MzIndexT otherFrame = 0;
   for (MzIndexT waveFrame = start; waveFrame < end; ++waveFrame, ++otherFrame) {
     for (MzIndexT channel = 0; channel < channels; ++channel) {
-      *MzWaveSample(wave, waveFrame, channel) +=
-          *MzWaveSample(other, otherFrame, channel) * amplitude;
+      *MzWaveSampleF(wave, waveFrame, channel) +=
+          *MzWaveSampleF(other, otherFrame, channel) * amplitude;
     }
   }
 }
 
-void MzWaveResize(MzWaveZ *wave, MzSizeT frames) {
+void MzWaveResizeF(MzWaveZ *wave, MzSizeT frames) {
   wave->frames = frames;
-  MzSizeT size = sizeof(MzSampleT) * frames * wave->channels;
+  MzSizeT size = sizeof(MzSampleT) * frames * wave->channelsM;
   MzSampleT *samples;
   if (wave->samples == NULL) {
     samples = malloc(size);
@@ -33,35 +33,35 @@ void MzWaveResize(MzWaveZ *wave, MzSizeT frames) {
     samples = realloc(wave->samples, size);
   }
   if (samples == NULL) {
-    MzPanic(1, "could not resize the wave");
+    MzPanicF(1, "could not resize the wave");
   }
   wave->samples = samples;
 }
 
-void MzWaveResizeFill(MzWaveZ *wave, MzSizeT frames, MzSampleT fill) {
+void MzWaveResizeFillF(MzWaveZ *wave, MzSizeT frames, MzSampleT fill) {
   MzSizeT oldSize = wave->frames;
-  MzWaveResize(wave, frames);
+  MzWaveResizeF(wave, frames);
   if (oldSize >= frames) {
     return;
   }
   for (MzIndexT frame = oldSize; frame < wave->frames; ++frame) {
-    for (MzIndexT channel = 0; channel < wave->channels; ++channel) {
-      *MzWaveSample(wave, frame, channel) = fill;
+    for (MzIndexT channel = 0; channel < wave->channelsM; ++channel) {
+      *MzWaveSampleF(wave, frame, channel) = fill;
     }
   }
 }
 
-void MzWaveNormalize(MzWaveZ *wave) {
-  MzAmplitudeT max = MzWaveMax(wave);
+void MzWaveNormalizeF(MzWaveZ *wave) {
+  MzAmplitudeT max = MzWaveMaxF(wave);
   if (max == 0.0) {
     return;
   }
   MzAmplitudeT amplitude = 1.0 / max;
-  MzWaveMul(wave, amplitude);
+  MzWaveMulF(wave, amplitude);
 }
 
-void MzWaveMul(MzWaveZ *wave, MzAmplitudeT amplitude) {
-  for (MzIndexT index = 0; index < wave->frames * wave->channels; ++index) {
+void MzWaveMulF(MzWaveZ *wave, MzAmplitudeT amplitude) {
+  for (MzIndexT index = 0; index < wave->frames * wave->channelsM; ++index) {
     wave->samples[index] *= amplitude;
   }
 }

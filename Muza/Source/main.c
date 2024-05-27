@@ -6,21 +6,21 @@
 
 #include <stdio.h>
 
-void fun(void * /*data*/) {
+void Test1F(void * /*data*/) {
   printf("Hello Muza\n");
-  MzWaveZ wave;
+  MzWaveZ waveL;
 
-  MzBlockWave(&MzBlockR, &wave);
-  MzWaveSave(&wave, "out/MzBlockR.wav");
-  MzWaveFree(&wave);
+  MzBlockWaveF(&MzBlockG, &waveL);
+  MzWaveSaveF(&waveL, "out/MzBlockR.wav");
+  MzWaveFreeF(&waveL);
 
-  MzHarmonizerWave(&MzHarmonizerR, &wave);
-  MzWaveSave(&wave, "out/MzHarmonizerR.wav");
-  MzWaveFree(&wave);
+  MzHarmonizerWaveF(&MzHarmonizerG, &waveL);
+  MzWaveSaveF(&waveL, "out/MzHarmonizerR.wav");
+  MzWaveFreeF(&waveL);
 
-  MzEnveloperWave(&MzEnveloperR, &wave);
-  MzWaveSave(&wave, "out/MzEnveloperR.wav");
-  MzWaveFree(&wave);
+  MzEnveloperWaveF(&MzEnveloperG, &waveL);
+  MzWaveSaveF(&waveL, "out/MzEnveloperR.wav");
+  MzWaveFreeF(&waveL);
 }
 
-int main() { MzMeasure(fun, NULL); }
+int main() { MzMeasureF(Test1F, NULL); }

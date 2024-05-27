@@ -2,6 +2,6 @@
 
 #include "Muza/Types.h"
 
-MzIndexT MzNumberersSaw(MzIndexT index);
+MzIndexT MzNumberersSawF(MzIndexT indexP);
 
-MzIndexT MzNumberersSqr(MzIndexT index);
+MzIndexT MzNumberersSqrF(MzIndexT indexP);

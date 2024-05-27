@@ -7,82 +7,82 @@
 #include "Muza/Types.h"
 #include "Muza/Wave.h"
 
-MzBlockZ MzBlockR = {.block = &MzBasicR, .type = MzBasicK};
+MzBlockZ MzBlockG = {.blockM = &MzBasicG, .typeM = MzBasicEK};
 
-void MzBlockCopy(MzBlockZ *block, MzBlockZ *from) {
-  block->block = from->block;
-  block->type = from->type;
+void MzBlockCopyF(MzBlockZ *blockP, MzBlockZ *fromP) {
+  blockP->blockM = fromP->blockM;
+  blockP->typeM = fromP->typeM;
 }
 
-void MzBlockTypeNotRecognizedPanic(MzBlockTypeE type) {
-  MzPanic(1, "waver type with code '%d' not recognized", type);
+void MzBlockTypeNotRecognizedPanicF(MzBlockTypeE typeP) {
+  MzPanicF(1, "waver type with code '%d' not recognized", typeP);
 }
 
-void MzBlockWave(MzBlockZ *block, MzWaveZ *wave) {
-  switch (block->type) {
-  case MzBlockK:
-    MzBlockWave(block->block, wave);
+void MzBlockWaveF(MzBlockZ *blockP, MzWaveZ *waveP) {
+  switch (blockP->typeM) {
+  case MzBlockEK:
+    MzBlockWaveF(blockP->blockM, waveP);
     return;
-  case MzBasicK:
-    MzBasicWave(block->block, wave);
+  case MzBasicEK:
+    MzBasicWaveF(blockP->blockM, waveP);
     return;
-  case MzEnveloperK:
-    MzEnveloperWave(block->block, wave);
+  case MzEnveloperEK:
+    MzEnveloperWaveF(blockP->blockM, waveP);
     return;
-  case MzHarmonizerK:
-    MzHarmonizerWave(block->block, wave);
+  case MzHarmonizerEK:
+    MzHarmonizerWaveF(blockP->blockM, waveP);
     return;
   }
-  MzBlockTypeNotRecognizedPanic(block->type);
+  MzBlockTypeNotRecognizedPanicF(blockP->typeM);
 }
 
-MzFrequencyT MzBlockFrequency(MzBlockZ *block) {
-  switch (block->type) {
-  case MzBlockK:
-    return MzBlockFrequency(block->block);
-  case MzBasicK:
-    return MzBasicFrequency(block->block);
-  case MzEnveloperK:
-    return MzEnveloperFrequency(block->block);
-  case MzHarmonizerK:
-    return MzHarmonizerFrequency(block->block);
+MzFrequencyT MzBlockFrequencyF(MzBlockZ *blockP) {
+  switch (blockP->typeM) {
+  case MzBlockEK:
+    return MzBlockFrequencyF(blockP->blockM);
+  case MzBasicEK:
+    return MzBasicFrequencyF(blockP->blockM);
+  case MzEnveloperEK:
+    return MzEnveloperFrequencyF(blockP->blockM);
+  case MzHarmonizerEK:
+    return MzHarmonizerFrequencyF(blockP->blockM);
   }
-  MzBlockTypeNotRecognizedPanic(block->type);
+  MzBlockTypeNotRecognizedPanicF(blockP->typeM);
   return 0;
 }
 
-void MzBlockSetFrequency(MzBlockZ *block, MzFrequencyT frequency) {
-  switch (block->type) {
-  case MzBlockK:
-    MzBlockSetFrequency(block->block, frequency);
+void MzBlockSetFrequencyF(MzBlockZ *blockP, MzFrequencyT frequencyP) {
+  switch (blockP->typeM) {
+  case MzBlockEK:
+    MzBlockSetFrequencyF(blockP->blockM, frequencyP);
     return;
-  case MzBasicK:
-    MzBasicSetFrequency(block->block, frequency);
+  case MzBasicEK:
+    MzBasicSetFrequencyF(blockP->blockM, frequencyP);
     return;
-  case MzEnveloperK:
-    MzEnveloperSetFrequency(block->block, frequency);
+  case MzEnveloperEK:
+    MzEnveloperSetFrequencyF(blockP->blockM, frequencyP);
     return;
-  case MzHarmonizerK:
-    MzHarmonizerSetFrequency(block->block, frequency);
+  case MzHarmonizerEK:
+    MzHarmonizerSetFrequencyF(blockP->blockM, frequencyP);
     return;
   }
-  MzBlockTypeNotRecognizedPanic(block->type);
+  MzBlockTypeNotRecognizedPanicF(blockP->typeM);
 }
 
-void MzBlockSetDuration(MzBlockZ *block, MzDurationT duration) {
-  switch (block->type) {
-  case MzBlockK:
-    MzBlockSetDuration(block->block, duration);
+void MzBlockSetDurationF(MzBlockZ *blockP, MzDurationT durationP) {
+  switch (blockP->typeM) {
+  case MzBlockEK:
+    MzBlockSetDurationF(blockP->blockM, durationP);
     return;
-  case MzBasicK:
-    MzBasicSetDuration(block->block, duration);
+  case MzBasicEK:
+    MzBasicSetDurationF(blockP->blockM, durationP);
     return;
-  case MzEnveloperK:
-    MzEnveloperSetDuration(block->block, duration);
+  case MzEnveloperEK:
+    MzEnveloperSetDurationF(blockP->blockM, durationP);
     return;
-  case MzHarmonizerK:
-    MzHarmonizerSetDuration(block->block, duration);
+  case MzHarmonizerEK:
+    MzHarmonizerSetDurationF(blockP->blockM, durationP);
     return;
   }
-  MzBlockTypeNotRecognizedPanic(block->type);
+  MzBlockTypeNotRecognizedPanicF(blockP->typeM);
 }

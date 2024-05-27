@@ -3,21 +3,26 @@
 #include "Muza/Types.h"
 #include "Muza/Wave.h"
 
-typedef enum { MzBlockK, MzBasicK, MzEnveloperK, MzHarmonizerK } MzBlockTypeE;
+typedef enum {
+  MzBlockEK,
+  MzBasicEK,
+  MzEnveloperEK,
+  MzHarmonizerEK
+} MzBlockTypeE;
 
 typedef struct {
-  MzBlockTypeE type;
-  void *block;
+  MzBlockTypeE typeM;
+  void *blockM;
 } MzBlockZ;
 
-extern MzBlockZ MzBlockR;
+extern MzBlockZ MzBlockG;
 
-void MzBlockCopy(MzBlockZ *block, MzBlockZ *from);
+void MzBlockCopyF(MzBlockZ *blockP, MzBlockZ *fromP);
 
-void MzBlockWave(MzBlockZ *block, MzWaveZ *wave);
+void MzBlockWaveF(MzBlockZ *blockP, MzWaveZ *waveP);
 
-MzFrequencyT MzBlockFrequency(MzBlockZ *block);
+MzFrequencyT MzBlockFrequencyF(MzBlockZ *blockP);
 
-void MzBlockSetFrequency(MzBlockZ *block, MzFrequencyT frequency);
+void MzBlockSetFrequencyF(MzBlockZ *blockP, MzFrequencyT frequencyP);
 
-void MzBlockSetDuration(MzBlockZ *block, MzDurationT duration);
+void MzBlockSetDurationF(MzBlockZ *blockP, MzDurationT durationP);

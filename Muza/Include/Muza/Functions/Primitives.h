@@ -2,10 +2,10 @@
 
 #include "Muza/Types.h"
 
-MzSampleT MzPrimitivesSaw(MzPartT part);
+MzSampleT MzPrimitivesSawF(MzPartT partP);
 
-MzSampleT MzPrimitivesSqr(MzPartT part);
+MzSampleT MzPrimitivesSqrF(MzPartT partP);
 
-MzSampleT MzPrimitivesTri(MzPartT part);
+MzSampleT MzPrimitivesTriF(MzPartT partP);
 
-MzSampleT MzPrimitivesSin(MzPartT part);
+MzSampleT MzPrimitivesSinF(MzPartT partP);

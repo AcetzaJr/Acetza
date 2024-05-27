@@ -6,44 +6,45 @@
 #include "Muza/Types.h"
 #include "Muza/Wave.h"
 
-MzEnveloperZ MzEnveloperR = {.block = &MzBlockR,
-                             .attack = 1.0 / 16.0,
-                             .hold = 1.0 / 12.0,
-                             .decay = 1.0 / 8.0,
-                             .sustain = 1.0 / 2.0,
-                             .release = 1.0 / 4.0,
-                             .attackTransformer = MzTransformersSmooth,
-                             .decayTransformer = MzTransformersSmooth,
-                             .releaseTransformer = MzTransformersSmooth};
+MzEnveloperZ MzEnveloperG = {.blockM = &MzBlockG,
+                             .attackM = 1.0 / 16.0,
+                             .holdM = 1.0 / 12.0,
+                             .decayM = 1.0 / 8.0,
+                             .sustainM = 1.0 / 2.0,
+                             .releaseM = 1.0 / 4.0,
+                             .attackTransformerM = MzTransformersSmoothF,
+                             .decayTransformerM = MzTransformersSmoothF,
+                             .releaseTransformerM = MzTransformersSmoothF};
 
-void MzEnveloperCopy(MzEnveloperZ *enveloper, MzEnveloperZ *from) {
-  enveloper->block = from->block;
-  enveloper->attack = from->attack;
-  enveloper->hold = from->hold;
-  enveloper->decay = from->decay;
-  enveloper->sustain = from->sustain;
-  enveloper->release = from->release;
-  enveloper->attackTransformer = from->attackTransformer;
-  enveloper->decayTransformer = from->decayTransformer;
-  enveloper->releaseTransformer = from->releaseTransformer;
+void MzEnveloperCopyF(MzEnveloperZ *enveloperP, MzEnveloperZ *fromP) {
+  enveloperP->blockM = fromP->blockM;
+  enveloperP->attackM = fromP->attackM;
+  enveloperP->holdM = fromP->holdM;
+  enveloperP->decayM = fromP->decayM;
+  enveloperP->sustainM = fromP->sustainM;
+  enveloperP->releaseM = fromP->releaseM;
+  enveloperP->attackTransformerM = fromP->attackTransformerM;
+  enveloperP->decayTransformerM = fromP->decayTransformerM;
+  enveloperP->releaseTransformerM = fromP->releaseTransformerM;
 }
 
-void MzEnveloperWave(MzEnveloperZ *enveloper, MzWaveZ *wave) {
-  MzBlockWave(enveloper->block, wave);
-  MzDurationT duration = MzWaveDuration(wave);
-  MzUntilZ until = MzUntilRelease(enveloper, wave, duration);
-  MzTransform(wave, enveloper->releaseTransformer, until.time, until.amplitude,
-              duration, 0.0, duration);
+void MzEnveloperWaveF(MzEnveloperZ *enveloperP, MzWaveZ *waveP) {
+  MzBlockWaveF(enveloperP->blockM, waveP);
+  MzDurationT durationL = MzWaveDurationF(waveP);
+  MzUntilZ untilL = MzUntilReleaseP(enveloperP, waveP, durationL);
+  MzTransformF(waveP, enveloperP->releaseTransformerM, untilL.timeM,
+               untilL.amplitudeM, durationL, 0.0, durationL);
 }
 
-MzFrequencyT MzEnveloperFrequency(MzEnveloperZ *enveloper) {
-  return MzBlockFrequency(enveloper->block);
+MzFrequencyT MzEnveloperFrequencyF(MzEnveloperZ *enveloperP) {
+  return MzBlockFrequencyF(enveloperP->blockM);
 }
 
-void MzEnveloperSetFrequency(MzEnveloperZ *enveloper, MzFrequencyT frequency) {
-  MzBlockSetFrequency(enveloper->block, frequency);
+void MzEnveloperSetFrequencyF(MzEnveloperZ *enveloperP,
+                              MzFrequencyT frequencyP) {
+  MzBlockSetFrequencyF(enveloperP->blockM, frequencyP);
 }
 
-void MzEnveloperSetDuration(MzEnveloperZ *enveloper, MzDurationT duration) {
-  MzBlockSetDuration(enveloper->block, duration);
+void MzEnveloperSetDurationF(MzEnveloperZ *enveloperP, MzDurationT durationP) {
+  MzBlockSetDurationF(enveloperP->blockM, durationP);
 }

@@ -4,11 +4,11 @@
 
 #include <stdio.h>
 
-void MzU64Print(u64 n) {
-  if (n < 1000) {
-    printf("%ld", n);
+void MzU64PrintF(u64T numberP) {
+  if (numberP < 1000) {
+    printf("%ld", numberP);
     return;
   }
-  MzU64Print(n / 1000);
-  printf(",%03ld", n % 1000);
+  MzU64PrintF(numberP / 1000);
+  printf(",%03ld", numberP % 1000);
 }

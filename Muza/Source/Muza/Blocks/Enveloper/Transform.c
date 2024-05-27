@@ -5,76 +5,76 @@
 #include "Muza/Types.h"
 #include "Muza/Wave.h"
 
-MzUntilZ MzUntilRelease(MzEnveloperZ *enveloper, MzWaveZ *wave,
-                        MzDurationT duration) {
-  MzUntilZ until;
-  MzTimeT releaseStart = duration - enveloper->release;
-  if (releaseStart <= 0.0) {
-    until.time = 0.0;
-    until.amplitude = 1.0;
-    return until;
+MzUntilZ MzUntilReleaseF(MzEnveloperZ *enveloperP, MzWaveZ *waveP,
+                         MzDurationT durationP) {
+  MzUntilZ untilL;
+  MzTimeT releaseStartL = durationP - enveloperP->releaseM;
+  if (releaseStartL <= 0.0) {
+    untilL.timeM = 0.0;
+    untilL.amplitudeM = 1.0;
+    return untilL;
   }
-  MzTransformResultZ result;
-  result = MzTransform(wave, enveloper->attackTransformer, 0.0, 0.0,
-                       enveloper->attack, 1.0, releaseStart);
-  if (result.disrupted) {
-    until.time = releaseStart;
-    until.amplitude = result.amplitude;
-    return until;
+  MzTransformResultZ resultL;
+  resultL = MzTransformF(waveP, enveloperP->attackTransformerM, 0.0, 0.0,
+                         enveloperP->attackM, 1.0, releaseStartL);
+  if (resultL.disruptedM) {
+    untilL.timeM = releaseStartL;
+    untilL.amplitudeM = resultL.amplitudeM;
+    return untilL;
   }
-  MzTimeT holdEnd = enveloper->attack + enveloper->hold;
-  if (holdEnd >= releaseStart) {
-    until.time = releaseStart;
-    until.amplitude = 1.0;
-    return until;
+  MzTimeT holdEndL = enveloperP->attackM + enveloperP->holdM;
+  if (holdEndL >= releaseStartL) {
+    untilL.timeM = releaseStartL;
+    untilL.amplitudeM = 1.0;
+    return untilL;
   }
-  MzTimeT decayEnd = holdEnd + enveloper->decay;
-  result = MzTransform(wave, enveloper->decayTransformer, holdEnd, 1.0,
-                       decayEnd, enveloper->sustain, releaseStart);
-  if (result.disrupted) {
-    until.time = releaseStart;
-    until.amplitude = result.amplitude;
-    return until;
+  MzTimeT decayEndL = holdEndL + enveloperP->decayM;
+  resultL = MzTransformF(waveP, enveloperP->decayTransformerM, holdEndL, 1.0,
+                         decayEndL, enveloperP->sustainM, releaseStartL);
+  if (resultL.disruptedM) {
+    untilL.timeM = releaseStartL;
+    untilL.amplitudeM = resultL.amplitudeM;
+    return untilL;
   }
-  MzIndexT start = MzTimeToFrame(decayEnd, wave->frameRate);
-  MzIndexT end = MzTimeToFrame(releaseStart, wave->frameRate);
-  for (MzIndexT frame = start; frame < end; ++frame) {
-    for (MzIndexT channel = 0; channel < wave->channels; ++channel) {
-      *MzWaveSample(wave, frame, channel) *= enveloper->sustain;
+  MzIndexT startL = MzTimeToFrameF(decayEndL, waveP->frameRateM);
+  MzIndexT endL = MzTimeToFrameF(releaseStartL, waveP->frameRateM);
+  for (MzIndexT frameL = startL; frameL < endL; ++frameL) {
+    for (MzIndexT channelL = 0; channelL < waveP->channelsM; ++channelL) {
+      *MzWaveSampleF(waveP, frameL, channelL) *= enveloperP->sustainM;
     }
   }
-  until.time = releaseStart;
-  until.amplitude = enveloper->sustain;
-  return until;
+  untilL.timeM = releaseStartL;
+  untilL.amplitudeM = enveloperP->sustainM;
+  return untilL;
 }
 
-MzTransformResultZ MzTransform(MzWaveZ *wave, MzTransformerF transformer,
-                               MzTimeT startTime, MzAmplitudeT startAmplitude,
-                               MzTimeT endTime, MzAmplitudeT endAmplitude,
-                               MzTimeT limit) {
-  MzIndexT frameLimit = MzTimeToFrame(limit, wave->frameRate);
-  MzIndexT start = MzTimeToFrame(startTime, wave->frameRate);
-  MzIndexT end = MzTimeToFrame(endTime, wave->frameRate);
-  MzAmplitudeT difference = endAmplitude - startAmplitude;
-  MzAmplitudeT last = startAmplitude + transformer(0.0) * difference;
-  f64 frames = (f64)(end - start);
-  MzTransformResultZ result;
-  f64 index = 0.0;
-  for (MzIndexT frame = start; frame < end; ++frame, ++index) {
-    if (frame >= frameLimit) {
-      result.disrupted = true;
-      result.amplitude = last;
-      result.time = MzFrameToTime(frame, wave->frameRate);
-      return result;
+MzTransformResultZ MzTransformF(MzWaveZ *waveP, MzTransformerFT transformerP,
+                                MzTimeT startTimeP,
+                                MzAmplitudeT startAmplitudeP, MzTimeT endTimeP,
+                                MzAmplitudeT endAmplitudeP, MzTimeT limitP) {
+  MzIndexT frameLimitL = MzTimeToFrameF(limitP, waveP->frameRateM);
+  MzIndexT startL = MzTimeToFrameF(startTimeP, waveP->frameRateM);
+  MzIndexT endL = MzTimeToFrameF(endTimeP, waveP->frameRateM);
+  MzAmplitudeT differenceL = endAmplitudeP - startAmplitudeP;
+  MzAmplitudeT lastL = startAmplitudeP + transformerP(0.0) * differenceL;
+  f64T framesL = (f64T)(endL - startL);
+  MzTransformResultZ resultL;
+  f64T indexL = 0.0;
+  for (MzIndexT frameL = startL; frameL < endL; ++frameL, ++indexL) {
+    if (frameL >= frameLimitL) {
+      resultL.disruptedM = true;
+      resultL.amplitudeM = lastL;
+      resultL.timeM = MzFrameToTimeF(frameL, waveP->frameRateM);
+      return resultL;
     }
-    MzPartT part = index / frames;
-    last = startAmplitude + transformer(part) * difference;
-    for (MzIndexT channel = 0; channel < wave->channels; ++channel) {
-      *MzWaveSample(wave, frame, channel) *= last;
+    MzPartT partL = indexL / framesL;
+    lastL = startAmplitudeP + transformerP(partL) * differenceL;
+    for (MzIndexT channelL = 0; channelL < waveP->channelsM; ++channelL) {
+      *MzWaveSampleF(waveP, frameL, channelL) *= lastL;
     }
   }
-  result.disrupted = false;
-  result.amplitude = last;
-  result.time = endTime;
-  return result;
+  resultL.disruptedM = false;
+  resultL.amplitudeM = lastL;
+  resultL.timeM = endTimeP;
+  return resultL;
 }

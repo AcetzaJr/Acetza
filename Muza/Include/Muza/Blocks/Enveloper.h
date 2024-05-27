@@ -5,25 +5,26 @@
 #include "Muza/Wave.h"
 
 typedef struct {
-  MzBlockZ *block;
-  MzAttackT attack;
-  MzHoldT hold;
-  MzDecayT decay;
-  MzSustainT sustain;
-  MzReleaseT release;
-  MzTransformerF attackTransformer;
-  MzTransformerF decayTransformer;
-  MzTransformerF releaseTransformer;
+  MzBlockZ *blockM;
+  MzAttackT attackM;
+  MzHoldT holdM;
+  MzDecayT decayM;
+  MzSustainT sustainM;
+  MzReleaseT releaseM;
+  MzTransformerFT attackTransformerM;
+  MzTransformerFT decayTransformerM;
+  MzTransformerFT releaseTransformerM;
 } MzEnveloperZ;
 
-extern MzEnveloperZ MzEnveloperR;
+extern MzEnveloperZ MzEnveloperG;
 
-void MzEnveloperCopy(MzEnveloperZ *enveloper, MzEnveloperZ *from);
+void MzEnveloperCopyF(MzEnveloperZ *enveloperP, MzEnveloperZ *fromP);
 
-void MzEnveloperWave(MzEnveloperZ *enveloper, MzWaveZ *wave);
+void MzEnveloperWaveF(MzEnveloperZ *enveloperP, MzWaveZ *waveP);
 
-MzFrequencyT MzEnveloperFrequency(MzEnveloperZ *enveloper);
+MzFrequencyT MzEnveloperFrequencyF(MzEnveloperZ *enveloperP);
 
-void MzEnveloperSetFrequency(MzEnveloperZ *enveloper, MzFrequencyT frequency);
+void MzEnveloperSetFrequencyF(MzEnveloperZ *enveloperP,
+                              MzFrequencyT frequencyP);
 
-void MzEnveloperSetDuration(MzEnveloperZ *enveloper, MzDurationT duration);
+void MzEnveloperSetDurationF(MzEnveloperZ *enveloperP, MzDurationT durationP);

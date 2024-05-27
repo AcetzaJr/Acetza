@@ -2,6 +2,7 @@
 
 #include "Muza/Common.h"
 
-u64 AzPosModU64(u64 number, u64 modulus) {
-  return number < 0 ? (number % modulus + modulus) % modulus : number % modulus;
+u64T MzPosModU64F(u64T numberP, u64T modulusP) {
+  return numberP < 0 ? (numberP % modulusP + modulusP) % modulusP
+                     : numberP % modulusP;
 }

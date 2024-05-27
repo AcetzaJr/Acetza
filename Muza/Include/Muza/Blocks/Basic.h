@@ -4,22 +4,22 @@
 #include "Muza/Wave.h"
 
 typedef struct {
-  MzPrimitiveF primitive;
-  MzFrequencyT frequency;
-  MzDurationT duration;
-  MzAmplitudeT amplitude;
-  MzChannelsT channels;
-  MzFrameRateT frameRate;
+  MzPrimitiveFT primitiveM;
+  MzFrequencyT frequencyM;
+  MzDurationT durationM;
+  MzAmplitudeT amplitudeM;
+  MzChannelsT channelsM;
+  MzFrameRateT frameRateM;
 } MzBasicZ;
 
-extern MzBasicZ MzBasicR;
+extern MzBasicZ MzBasicG;
 
-void MzBasicCopy(MzBasicZ *basic, MzBasicZ *from);
+void MzBasicCopyF(MzBasicZ *basicP, MzBasicZ *fromP);
 
-void MzBasicWave(MzBasicZ *basic, MzWaveZ *wave);
+void MzBasicWaveF(MzBasicZ *basicP, MzWaveZ *waveP);
 
-MzFrequencyT MzBasicFrequency(MzBasicZ *basic);
+MzFrequencyT MzBasicFrequencyF(MzBasicZ *basicP);
 
-void MzBasicSetFrequency(MzBasicZ *basic, MzFrequencyT frequency);
+void MzBasicSetFrequencyF(MzBasicZ *basicP, MzFrequencyT frequencyP);
 
-void MzBasicSetDuration(MzBasicZ *basic, MzDurationT duration);
+void MzBasicSetDurationF(MzBasicZ *basicP, MzDurationT durationP);

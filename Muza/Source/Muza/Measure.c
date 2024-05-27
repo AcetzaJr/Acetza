@@ -6,17 +6,17 @@
 #include <stdio.h>
 #include <time.h>
 
-void MzMeasure(void (*fun)(void *), void *data) {
-  struct timespec start;
-  struct timespec stop;
-  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
-  fun(data);
-  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &stop);
-  long seconds = stop.tv_sec - start.tv_sec;
-  long nano = stop.tv_nsec - start.tv_nsec;
+void MzMeasureF(void (*fnP)(void *), void *dataP) {
+  struct timespec startL;
+  struct timespec stopL;
+  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &startL);
+  fnP(dataP);
+  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &stopL);
+  long secondsL = stopL.tv_sec - startL.tv_sec;
+  long nanoL = stopL.tv_nsec - startL.tv_nsec;
   printf("> Running time [seconds: ");
-  MzU64Print(seconds);
+  MzU64PrintF(secondsL);
   printf(", nano: ");
-  MzU64Print(nano);
+  MzU64PrintF(nanoL);
   printf("]\n");
 }

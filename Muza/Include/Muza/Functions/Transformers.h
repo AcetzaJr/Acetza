@@ -2,6 +2,6 @@
 
 #include "Muza/Types.h"
 
-MzAmplitudeT MzTransformersSmooth(MzPartT part);
+MzAmplitudeT MzTransformersSmoothF(MzPartT partP);
 
-MzAmplitudeT MzTransformersSmoothInverse(MzPartT part);
+MzAmplitudeT MzTransformersSmoothInverseF(MzPartT partP);

@@ -5,20 +5,21 @@
 #include "Muza/Wave.h"
 
 typedef struct {
-  MzBlockZ *block;
-  MzDepthT depth;
-  MzNumbererF numberer;
+  MzBlockZ *blockM;
+  MzDepthT depthM;
+  MzNumbererFT numbererM;
 } MzHarmonizerZ;
 
-extern MzHarmonizerZ MzHarmonizerR;
+extern MzHarmonizerZ MzHarmonizerG;
 
-void MzHarmonizerCopy(MzHarmonizerZ *harmonizer, MzHarmonizerZ *from);
+void MzHarmonizerCopyF(MzHarmonizerZ *harmonizerP, MzHarmonizerZ *fromP);
 
-void MzHarmonizerWave(MzHarmonizerZ *harmonizer, MzWaveZ *wave);
+void MzHarmonizerWaveF(MzHarmonizerZ *harmonizerP, MzWaveZ *waveP);
 
-MzFrequencyT MzHarmonizerFrequency(MzHarmonizerZ *harmonizer);
+MzFrequencyT MzHarmonizerFrequencyF(MzHarmonizerZ *harmonizerP);
 
-void MzHarmonizerSetFrequency(MzHarmonizerZ *harmonizer,
-                              MzFrequencyT frequency);
+void MzHarmonizerSetFrequencyF(MzHarmonizerZ *harmonizerP,
+                               MzFrequencyT frequencyP);
 
-void MzHarmonizerSetDuration(MzHarmonizerZ *harmonizer, MzDurationT duration);
+void MzHarmonizerSetDurationF(MzHarmonizerZ *harmonizerP,
+                              MzDurationT durationP);

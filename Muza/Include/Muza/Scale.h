@@ -3,15 +3,15 @@
 #include "Muza/Types.h"
 
 typedef struct {
-  MzFrequencyT *rations;
-  MzFrequencyT base;
-  MzCountT count;
+  MzFrequencyT *rationsM;
+  MzFrequencyT baseM;
+  MzCountT countM;
 } MzScaleZ;
 
-extern MzScaleZ MzAcetzaR;
+extern MzScaleZ MzAcetzaG;
 
-void MzAcetzaInit(MzFrequencyT base);
+void MzAcetzaInitF(MzFrequencyT baseP);
 
-MzFrequencyT MzScaleFrequency(MzScaleZ *scale, MzNoteT note);
+MzFrequencyT MzScaleFrequencyF(MzScaleZ *scaleP, MzNoteT noteP);
 
-MzFrequencyT MzEqualTempered(MzNoteT note, MzFrequencyT base);
+MzFrequencyT MzEqualTemperedF(MzNoteT noteP, MzFrequencyT baseP);

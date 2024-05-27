@@ -2,4 +2,4 @@
 
 #include "Muza/Common.h"
 
-void MzU64Print(u64 n);
+void MzU64PrintF(u64T numberP);

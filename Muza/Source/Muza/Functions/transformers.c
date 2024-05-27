@@ -5,8 +5,10 @@
 
 #include <math.h>
 
-MzAmplitudeT MzTransformersSmooth(MzPartT part) { return sin(HalfPiK * part); }
+MzAmplitudeT MzTransformersSmoothF(MzPartT partP) {
+  return sin(HalfPiK * partP);
+}
 
-MzAmplitudeT MzTransformersSmoothInverse(MzPartT part) {
-  return sin(HalfPiK * part + HalfPiK);
+MzAmplitudeT MzTransformersSmoothInverseF(MzPartT partP) {
+  return sin(HalfPiK * partP + HalfPiK);
 }

@@ -4,5 +4,5 @@
 
 #include <math.h>
 
-const f64 HalfPiK = M_PI / 2.0;
-const f64 TwoPiK = 2.0 * M_PI;
+const f64T HalfPiK = M_PI / 2.0;
+const f64T TwoPiK = 2.0 * M_PI;

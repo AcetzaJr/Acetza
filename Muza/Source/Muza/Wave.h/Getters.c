@@ -2,13 +2,13 @@
 
 #include "Muza/Types.h"
 
-MzSampleT *MzWaveSample(MzWaveZ *wave, MzFrameT frame, MzChannelT channel) {
-  return &wave->samples[frame * wave->channels + channel];
+MzSampleT *MzWaveSampleF(MzWaveZ *wave, MzFrameT frame, MzChannelT channel) {
+  return &wave->samples[frame * wave->channelsM + channel];
 }
 
-MzAmplitudeT MzWaveMax(MzWaveZ *wave) {
+MzAmplitudeT MzWaveMaxF(MzWaveZ *wave) {
   MzAmplitudeT max = 0.0;
-  for (MzIndexT index = 0; index < wave->frames * wave->channels; ++index) {
+  for (MzIndexT index = 0; index < wave->frames * wave->channelsM; ++index) {
     if (wave->samples[index] > max) {
       max = wave->samples[index];
     }
@@ -16,6 +16,6 @@ MzAmplitudeT MzWaveMax(MzWaveZ *wave) {
   return max;
 }
 
-MzDurationT MzWaveDuration(MzWaveZ *wave) {
-  return MzFrameToTime(wave->frames, wave->frameRate);
+MzDurationT MzWaveDurationF(MzWaveZ *wave) {
+  return MzFrameToTimeF(wave->frames, wave->frameRateM);
 }

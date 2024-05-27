@@ -4,11 +4,11 @@
 
 #include <stdlib.h>
 
-void MzWaveWithDuration(MzWaveZ *wave, MzDurationT duration,
-                        MzChannelsT channels, MzFrameRateT frameRate) {
-  wave->frames = MzTimeToFrame(duration, frameRate);
-  wave->channels = channels;
-  wave->frameRate = frameRate;
+void MzWaveWithDurationF(MzWaveZ *wave, MzDurationT duration,
+                         MzChannelsT channels, MzFrameRateT frameRate) {
+  wave->frames = MzTimeToFrameF(duration, frameRate);
+  wave->channelsM = channels;
+  wave->frameRateM = frameRate;
   MzSizeT size = sizeof(MzSampleT) * wave->frames * channels;
   if (size == 0) {
     wave->samples = NULL;
@@ -17,11 +17,11 @@ void MzWaveWithDuration(MzWaveZ *wave, MzDurationT duration,
   wave->samples = malloc(size);
 }
 
-void MzWaveEmpty(MzWaveZ *wave, MzChannelsT channels, MzFrameRateT frameRate) {
+void MzWaveEmptyF(MzWaveZ *wave, MzChannelsT channels, MzFrameRateT frameRate) {
   wave->frames = 0;
-  wave->channels = channels;
-  wave->frameRate = frameRate;
+  wave->channelsM = channels;
+  wave->frameRateM = frameRate;
   wave->samples = NULL;
 }
 
-void MzWaveFree(MzWaveZ *wave) { free(wave->samples); }
+void MzWaveFreeF(MzWaveZ *wave) { free(wave->samples); }

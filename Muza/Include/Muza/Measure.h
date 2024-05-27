@@ -1,3 +1,3 @@
 #pragma once
 
-void MzMeasure(void (*fun)(void *), void *data);
+void MzMeasureF(void (*fnP)(void *), void *dataP);

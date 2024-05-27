@@ -5,18 +5,18 @@
 
 #include <math.h>
 
-MzSampleT MzPrimitivesSaw(MzPartT part) { return 1.0 - 2.0 * part; }
+MzSampleT MzPrimitivesSawF(MzPartT partP) { return 1.0 - 2.0 * partP; }
 
-MzSampleT MzPrimitivesSqr(MzPartT part) { return part < 0.5 ? 1.0 : -1.0; }
+MzSampleT MzPrimitivesSqrF(MzPartT partP) { return partP < 0.5 ? 1.0 : -1.0; }
 
-MzSampleT MzPrimitivesTri(MzPartT part) {
-  if (part < 0.25) {
-    return 4.0 * part;
+MzSampleT MzPrimitivesTriF(MzPartT partP) {
+  if (partP < 0.25) {
+    return 4.0 * partP;
   }
-  if (part < 0.75) {
-    return 2.0 - 4.0 * part;
+  if (partP < 0.75) {
+    return 2.0 - 4.0 * partP;
   }
-  return 4.0 * part - 4.0;
+  return 4.0 * partP - 4.0;
 }
 
-MzSampleT MzPrimitivesSin(MzPartT part) { return sin(TwoPiK * part); }
+MzSampleT MzPrimitivesSinF(MzPartT partP) { return sin(TwoPiK * partP); }

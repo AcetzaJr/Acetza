@@ -5,20 +5,20 @@
 #include "Muza/Wave.h"
 
 typedef struct {
-  MzTimeT time;
-  MzAmplitudeT amplitude;
+  MzTimeT timeM;
+  MzAmplitudeT amplitudeM;
 } MzUntilZ;
 
 typedef struct {
-  bool disrupted;
-  MzTimeT time;
-  MzAmplitudeT amplitude;
+  bool disruptedM;
+  MzTimeT timeM;
+  MzAmplitudeT amplitudeM;
 } MzTransformResultZ;
 
-MzUntilZ MzUntilRelease(MzEnveloperZ *enveloper, MzWaveZ *wave,
-                        MzDurationT duration);
+MzUntilZ MzUntilReleaseP(MzEnveloperZ *enveloperP, MzWaveZ *waveP,
+                         MzDurationT durationP);
 
-MzTransformResultZ MzTransform(MzWaveZ *wave, MzTransformerF transformer,
-                               MzTimeT startTime, MzAmplitudeT startAmplitude,
-                               MzTimeT endTime, MzAmplitudeT endAmplitude,
-                               MzTimeT limit);
+MzTransformResultZ MzTransformF(MzWaveZ *waveP, MzTransformerFT transformerP,
+                                MzTimeT startTimeP,
+                                MzAmplitudeT startAmplitudeP, MzTimeT endTimeP,
+                                MzAmplitudeT endAmplitudeP, MzTimeT limitP);

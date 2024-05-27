@@ -4,12 +4,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void MzPanic(int code, const char *message, ...) {
+void MzPanicF(int codeP, const char *messageP, ...) {
   printf("> Panic: ");
-  va_list args;
-  va_start(args, message);
-  vprintf(message, args);
-  va_end(args);
+  va_list argsL;
+  va_start(argsL, message);
+  vprintf(messageP, argsL);
+  va_end(argsL);
   printf("\n");
-  exit(code);
+  exit(codeP);
 }

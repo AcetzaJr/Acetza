@@ -2,5 +2,5 @@
 
 #include "Muza/Common.h"
 
-extern const f64 HalfPiK;
-extern const f64 TwoPiK;
+extern const f64T HalfPiK;
+extern const f64T TwoPiK;

@@ -6,39 +6,41 @@
 #include "Muza/Types.h"
 #include "Muza/Wave.h"
 
-MzHarmonizerZ MzHarmonizerR = {
-    .block = &MzBlockR, .depth = 7, .numberer = MzNumberersSaw};
+MzHarmonizerZ MzHarmonizerG = {
+    .blockM = &MzBlockG, .depthM = 7, .numbererM = MzNumberersSawF};
 
-void MzHarmonizerCopy(MzHarmonizerZ *harmonizer, MzHarmonizerZ *from) {
-  harmonizer->block = from->block;
-  harmonizer->depth = from->depth;
-  harmonizer->numberer = from->numberer;
+void MzHarmonizerCopyF(MzHarmonizerZ *harmonizerP, MzHarmonizerZ *fromP) {
+  harmonizerP->blockM = fromP->blockM;
+  harmonizerP->depthM = fromP->depthM;
+  harmonizerP->numbererM = fromP->numbererM;
 }
 
-void MzHarmonizerWave(MzHarmonizerZ *harmonizer, MzWaveZ *wave) {
-  MzBlockWave(harmonizer->block, wave);
-  const MzFrequencyT frequency = MzBlockFrequency(harmonizer->block);
-  for (MzIndexT index = 2; index - 1 < harmonizer->depth; ++index) {
-    MzIndexT number = harmonizer->numberer(index);
-    MzBlockSetFrequency(harmonizer->block, frequency * (MzFrequencyT)number);
-    MzWaveZ tmp;
-    MzBlockWave(harmonizer->block, &tmp);
-    MzWaveAdd(wave, &tmp, 0.0, 1.0 / (MzAmplitudeT)number);
-    MzWaveFree(&tmp);
+void MzHarmonizerWaveF(MzHarmonizerZ *harmonizerP, MzWaveZ *waveP) {
+  MzBlockWaveF(harmonizerP->blockM, waveP);
+  const MzFrequencyT frequencyL = MzBlockFrequencyF(harmonizerP->blockM);
+  for (MzIndexT indexL = 2; indexL - 1 < harmonizerP->depthM; ++indexL) {
+    MzIndexT numberL = harmonizerP->numbererM(indexL);
+    MzBlockSetFrequencyF(harmonizerP->blockM,
+                         frequencyL * (MzFrequencyT)numberL);
+    MzWaveZ tmpL;
+    MzBlockWaveF(harmonizerP->blockM, &tmpL);
+    MzWaveAddF(waveP, &tmpL, 0.0, 1.0 / (MzAmplitudeT)numberL);
+    MzWaveFreeF(&tmpL);
   }
-  MzBlockSetFrequency(harmonizer->block, frequency);
-  MzWaveNormalize(wave);
+  MzBlockSetFrequencyF(harmonizerP->blockM, frequencyL);
+  MzWaveNormalizeF(waveP);
 }
 
-MzFrequencyT MzHarmonizerFrequency(MzHarmonizerZ *harmonizer) {
-  return MzBlockFrequency(harmonizer->block);
+MzFrequencyT MzHarmonizerFrequencyF(MzHarmonizerZ *harmonizerP) {
+  return MzBlockFrequencyF(harmonizerP->blockM);
 }
 
-void MzHarmonizerSetFrequency(MzHarmonizerZ *harmonizer,
-                              MzFrequencyT frequency) {
-  MzBlockSetFrequency(harmonizer->block, frequency);
+void MzHarmonizerSetFrequencyF(MzHarmonizerZ *harmonizerP,
+                               MzFrequencyT frequencyP) {
+  MzBlockSetFrequencyF(harmonizerP->blockM, frequencyP);
 }
 
-void MzHarmonizerSetDuration(MzHarmonizerZ *harmonizer, MzDurationT duration) {
-  MzBlockSetDuration(harmonizer->block, duration);
+void MzHarmonizerSetDurationF(MzHarmonizerZ *harmonizerP,
+                              MzDurationT durationP) {
+  MzBlockSetDurationF(harmonizerP->blockM, durationP);
 }
