@@ -82,7 +82,7 @@ PortMidiStream *MzOpenMidiInput(int deviceID) {
 
 int MzMidiHandler(void *dataP) {
   PortMidiStream *streamL = dataP;
-  // Pm_SetFilter(streamL, PM_FILT_NOTE);
+  Pm_SetChannelMask(streamL, Pm_Channel(0));
   PmEvent bufferL[MzMidiBufferSizeD];
   while (MzSessionRunningG) {
     int countL = Pm_Read(streamL, bufferL, MzMidiBufferSizeD);
@@ -96,11 +96,16 @@ int MzMidiHandler(void *dataP) {
       bytesL[1] = bufferL[indexL].message >> 8;
       bytesL[2] = bufferL[indexL].message >> 16;
       bytesL[3] = bufferL[indexL].message >> 24;
-      printf("[");
+      printf("{");
       for (int byteIndexL = 0; byteIndexL < 4; byteIndexL++) {
-        printf("(%08b)", bytesL[byteIndexL]);
+        printf(" [");
+        printf(" Byte(%d) ", byteIndexL);
+        printf("Dec(%03d) ", bytesL[byteIndexL]);
+        printf("Hex(%02x) ", bytesL[byteIndexL]);
+        printf("Bin(%08b) ", bytesL[byteIndexL]);
+        printf("] ");
       }
-      printf("]");
+      printf("}");
     }
     printf("\n");
   }
