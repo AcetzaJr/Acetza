@@ -91,6 +91,7 @@ int MzMidiHandler(void *dataP) {
     }
     printf("%d messages arrived\n", countL);
     for (int indexL = 0; indexL < countL; indexL++) {
+      printf("time: %d\n", bufferL[indexL].timestamp);
       u8T bytesL[4];
       bytesL[0] = bufferL[indexL].message;
       bytesL[1] = bufferL[indexL].message >> 8;
@@ -100,7 +101,7 @@ int MzMidiHandler(void *dataP) {
       for (int byteIndexL = 0; byteIndexL < 4; byteIndexL++) {
         printf(" [");
         printf(" Byte(%d) ", byteIndexL);
-        printf("Dec(%03d) ", bytesL[byteIndexL]);
+        printf("Dec(%3d) ", bytesL[byteIndexL]);
         printf("Hex(%02x) ", bytesL[byteIndexL]);
         printf("Bin(%08b) ", bytesL[byteIndexL]);
         printf("] ");
