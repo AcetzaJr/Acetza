@@ -36,7 +36,8 @@
         "readability-magic-numbers",
         "misc-no-recursion",
         "concurrency-mt-unsafe",
-        "cert-flp30-c"
+        "cert-flp30-c",
+        "cert-err33-c"
       ],
       "FastCheckFilter": "None"
     }
