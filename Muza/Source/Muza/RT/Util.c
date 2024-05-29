@@ -2,6 +2,7 @@
 
 #include "Muza/Panic.h"
 
+#include <portaudio.h>
 #include <portmidi.h>
 #include <porttime.h>
 
@@ -9,21 +10,31 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void MzInitRT() {
+void MzInitRTF() {
   if (Pm_Initialize() != pmNoError) {
     MzPanicF(1, "Pm_Initialize failed");
   }
   if (Pt_Start(1, NULL, NULL) != ptNoError) {
     MzPanicF(1, "Pt_Start failed");
   };
+  if (Pa_Initialize() != paNoError) {
+    MzPanicF(1, "Pa_Initialize failed");
+  }
 }
 
-void MzEndRT() {
-  Pt_Stop();
-  Pm_Terminate();
+void MzEndRTF() {
+  if (Pa_Terminate() != paNoError) {
+    MzPanicF(1, "Pa_Terminate failed");
+  }
+  if (Pt_Stop() != ptNoError) {
+    MzPanicF(1, "Pt_Stop failed");
+  }
+  if (Pm_Terminate() != pmNoError) {
+    MzPanicF(1, "Pm_Terminate failed");
+  }
 }
 
-PortMidiStream *MzSelectMidiInput() {
+PortMidiStream *MzSelectMidiInputF() {
   while (true) {
     for (int indexL = 0; indexL < Pm_CountDevices(); indexL++) {
       const PmDeviceInfo *infoL = Pm_GetDeviceInfo(indexL);
@@ -65,10 +76,10 @@ PortMidiStream *MzSelectMidiInput() {
   }
 }
 
-PortMidiStream *MzOpenMidiInput(int deviceID) {
+PortMidiStream *MzOpenMidiInputF(int deviceIDP) {
   PortMidiStream *streamL = NULL;
-  if (Pm_OpenInput(&streamL, deviceID, NULL, MzMidiBufferSizeD, NULL, NULL)) {
-    MzPanicF(1, "input device with id %d could not be opened\n", deviceID);
+  if (Pm_OpenInput(&streamL, deviceIDP, NULL, MzMidiBufferSizeD, NULL, NULL)) {
+    MzPanicF(1, "input device with id %d could not be opened\n", deviceIDP);
   }
   return streamL;
 }

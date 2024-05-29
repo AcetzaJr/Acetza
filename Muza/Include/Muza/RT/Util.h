@@ -4,10 +4,10 @@
 
 #define MzMidiBufferSizeD 512
 
-void MzInitRT();
+void MzInitRTF();
 
-void MzEndRT();
+void MzEndRTF();
 
-PortMidiStream *MzSelectMidiInput();
+PortMidiStream *MzSelectMidiInputF();
 
-PortMidiStream *MzOpenMidiInput(int deviceID);
+PortMidiStream *MzOpenMidiInputF(int deviceID);

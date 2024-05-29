@@ -6,4 +6,4 @@ typedef struct {
 
 extern MzSessionZ MzSessionG;
 
-void MzSessionStart();
+void MzSessionStartF();
