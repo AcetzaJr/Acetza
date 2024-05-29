@@ -5,7 +5,7 @@
 #include "Muza/Wave.h"
 
 typedef struct {
-  MzBlockZ *blockM;
+  MzBufferBlockZ *blockM;
   MzAttackT attackM;
   MzHoldT holdM;
   MzDecayT decayM;

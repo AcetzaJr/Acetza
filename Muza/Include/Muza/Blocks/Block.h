@@ -13,16 +13,16 @@ typedef enum {
 typedef struct {
   MzBlockTypeE typeM;
   void *blockM;
-} MzBlockZ;
+} MzBufferBlockZ;
 
-extern MzBlockZ MzBlockG;
+extern MzBufferBlockZ MzBlockG;
 
-void MzBlockCopyF(MzBlockZ *blockP, MzBlockZ *fromP);
+void MzBlockCopyF(MzBufferBlockZ *blockP, MzBufferBlockZ *fromP);
 
-void MzBlockWaveF(MzBlockZ *blockP, MzWaveZ *waveP);
+void MzBlockWaveF(MzBufferBlockZ *blockP, MzWaveZ *waveP);
 
-MzFrequencyT MzBlockFrequencyF(MzBlockZ *blockP);
+MzFrequencyT MzBlockFrequencyF(MzBufferBlockZ *blockP);
 
-void MzBlockSetFrequencyF(MzBlockZ *blockP, MzFrequencyT frequencyP);
+void MzBlockSetFrequencyF(MzBufferBlockZ *blockP, MzFrequencyT frequencyP);
 
-void MzBlockSetDurationF(MzBlockZ *blockP, MzDurationT durationP);
+void MzBlockSetDurationF(MzBufferBlockZ *blockP, MzDurationT durationP);

@@ -14,16 +14,18 @@
 #include <time.h>
 
 int MzDefaultDeviceIDG = 3;
-MzSessionZ MzSessionG = {.runningM = false};
+MzSessionZ MzSessionG = {
+    .runningM = false, .channelsCountM = 2, .frameRateM = 44'100};
 
 void MzSessionStartF() {
   MzInitRTF();
   PortMidiStream *streamL = MzOpenMidiInputF(MzDefaultDeviceIDG);
   MzSessionG.runningM = true;
   PaStream *audioStreamL;
-  PaError errorL = Pa_OpenDefaultStream(&audioStreamL, 0, 2, paFloat32, 44'100,
-                                        paFramesPerBufferUnspecified,
-                                        MzAudioCallbackF, NULL);
+  PaError errorL = Pa_OpenDefaultStream(
+      &audioStreamL, 0, MzSessionG.channelsCountM, paFloat32,
+      MzSessionG.frameRateM, paFramesPerBufferUnspecified, MzAudioCallbackF,
+      NULL);
   if (errorL != paNoError) {
     MzPanicF(1, "could not open audio stream");
   }

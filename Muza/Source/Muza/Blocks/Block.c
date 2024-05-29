@@ -7,9 +7,9 @@
 #include "Muza/Types.h"
 #include "Muza/Wave.h"
 
-MzBlockZ MzBlockG = {.blockM = &MzBasicG, .typeM = MzBasicEK};
+MzBufferBlockZ MzBlockG = {.blockM = &MzBasicG, .typeM = MzBasicEK};
 
-void MzBlockCopyF(MzBlockZ *blockP, MzBlockZ *fromP) {
+void MzBlockCopyF(MzBufferBlockZ *blockP, MzBufferBlockZ *fromP) {
   blockP->blockM = fromP->blockM;
   blockP->typeM = fromP->typeM;
 }
@@ -18,7 +18,7 @@ void MzBlockTypeNotRecognizedPanicF(MzBlockTypeE typeP) {
   MzPanicF(1, "waver type with code '%d' not recognized", typeP);
 }
 
-void MzBlockWaveF(MzBlockZ *blockP, MzWaveZ *waveP) {
+void MzBlockWaveF(MzBufferBlockZ *blockP, MzWaveZ *waveP) {
   switch (blockP->typeM) {
   case MzBlockEK:
     MzBlockWaveF(blockP->blockM, waveP);
@@ -36,7 +36,7 @@ void MzBlockWaveF(MzBlockZ *blockP, MzWaveZ *waveP) {
   MzBlockTypeNotRecognizedPanicF(blockP->typeM);
 }
 
-MzFrequencyT MzBlockFrequencyF(MzBlockZ *blockP) {
+MzFrequencyT MzBlockFrequencyF(MzBufferBlockZ *blockP) {
   switch (blockP->typeM) {
   case MzBlockEK:
     return MzBlockFrequencyF(blockP->blockM);
@@ -51,7 +51,7 @@ MzFrequencyT MzBlockFrequencyF(MzBlockZ *blockP) {
   return 0;
 }
 
-void MzBlockSetFrequencyF(MzBlockZ *blockP, MzFrequencyT frequencyP) {
+void MzBlockSetFrequencyF(MzBufferBlockZ *blockP, MzFrequencyT frequencyP) {
   switch (blockP->typeM) {
   case MzBlockEK:
     MzBlockSetFrequencyF(blockP->blockM, frequencyP);
@@ -69,7 +69,7 @@ void MzBlockSetFrequencyF(MzBlockZ *blockP, MzFrequencyT frequencyP) {
   MzBlockTypeNotRecognizedPanicF(blockP->typeM);
 }
 
-void MzBlockSetDurationF(MzBlockZ *blockP, MzDurationT durationP) {
+void MzBlockSetDurationF(MzBufferBlockZ *blockP, MzDurationT durationP) {
   switch (blockP->typeM) {
   case MzBlockEK:
     MzBlockSetDurationF(blockP->blockM, durationP);
