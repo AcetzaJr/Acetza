@@ -24,6 +24,17 @@ void MzBufferBlockInitF(MzBufferBlockZ *block, MzFramesT framesCountP,
   if (block->samplesM == NULL) {
     MzPanicF(1, "MzBufferBlockInitF failed");
   }
+  for (MzIndexT i = 0; i < block->samplesCountM; i++) {
+    block->samplesM[i] = 0;
+  }
+  block->isReadyM = true;
 }
 
 void MzBufferBlockFreeF(MzBufferBlockZ *block) { free(block->samplesM); }
+
+void MzBufferBlockNotReadyF(MzBufferBlockZ *block) {
+  for (MzIndexT i = 0; i < block->samplesCountM; i++) {
+    block->samplesM[i] = 0;
+  }
+  block->isReadyM = false;
+}

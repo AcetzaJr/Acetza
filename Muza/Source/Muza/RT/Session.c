@@ -4,6 +4,8 @@
 #include "Muza/RT/AudioCallback.h"
 #include "Muza/RT/MidiThread.h"
 #include "Muza/RT/Util.h"
+#include "Muza/RT/WaveBuffer.h"
+#include "glib.h"
 
 #include <portaudio.h>
 #include <portmidi.h>
@@ -30,8 +32,13 @@ void MzSessionStartF() {
     MzPanicF(1, "could not open audio stream");
   }
   const PaStreamInfo *info = Pa_GetStreamInfo(audioStreamL);
-  printf("outputLatency: %f\n", info->outputLatency);
-  printf("buffer: %f\n", info->outputLatency * 44'100 / 4);
+  // printf("outputLatency: %f\n", info->outputLatency);
+  // printf("buffer: %f\n", info->outputLatency * 44'100 / 4);
+  MzWaveBufferInitF(&MzSessionG.waveBufferM, 2,
+                    info->outputLatency * MzSessionG.frameRateM /
+                        MzSessionG.channelsCountM,
+                    MzSessionG.channelsCountM);
+  MzSessionG.blockQueueM = g_async_queue_new();
   errorL = Pa_StartStream(audioStreamL);
   if (errorL != paNoError) {
     MzPanicF(1, "could not start audio stream");
@@ -49,4 +56,6 @@ void MzSessionStartF() {
   }
   Pm_Close(streamL);
   MzEndRTF();
+  MzWaveBufferFreeF(&MzSessionG.waveBufferM);
+  g_async_queue_unref(MzSessionG.blockQueueM);
 }

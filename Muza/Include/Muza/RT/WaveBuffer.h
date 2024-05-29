@@ -7,9 +7,14 @@ typedef struct {
   MzBufferBlockZ *activeBlockM;
   MzBufferBlockZ **blocksM;
   MzCountT blocksCountM;
+  MzIndexT sampleIndexM;
 } MzWaveBufferZ;
 
 void MzWaveBufferInitF(MzWaveBufferZ *bufferP, MzCountT blocksCountP,
                        MzFramesT framesCountP, MzChannelsT channelsCountP);
 
-void MzWaveBufferFreeF(MzWaveBufferZ *buffer);
+void MzWaveBufferFreeF(MzWaveBufferZ *bufferP);
+
+double MzWaveBufferNextSampleF(MzWaveBufferZ *bufferP);
+
+bool MzWaveBufferTrySwapF(MzWaveBufferZ *bufferP);

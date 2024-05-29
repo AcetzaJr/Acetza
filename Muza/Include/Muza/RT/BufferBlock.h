@@ -7,6 +7,7 @@ typedef struct {
   MzCountT samplesCountM;
   MzFramesT framesCountM;
   MzChannelsT channelsCountM;
+  bool isReadyM;
 } MzBufferBlockZ;
 
 MzBufferBlockZ *MzBufferBlockCreateF(MzFramesT framesCountP,
@@ -16,3 +17,5 @@ void MzBufferBlockInitF(MzBufferBlockZ *block, MzFramesT framesCountP,
                         MzChannelsT channelsCountP);
 
 void MzBufferBlockFreeF(MzBufferBlockZ *block);
+
+void MzBufferBlockNotReadyF(MzBufferBlockZ *block);
