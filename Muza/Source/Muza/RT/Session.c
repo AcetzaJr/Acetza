@@ -2,6 +2,7 @@
 
 #include "Muza/Panic.h"
 #include "Muza/RT/AudioCallback.h"
+#include "Muza/RT/BlockThread.h"
 #include "Muza/RT/MidiThread.h"
 #include "Muza/RT/Util.h"
 #include "Muza/RT/WaveBuffer.h"
@@ -39,21 +40,24 @@ void MzSessionStartF() {
                         MzSessionG.channelsCountM,
                     MzSessionG.channelsCountM);
   MzSessionG.blockQueueM = g_async_queue_new();
+  thrd_t blockThreadL;
+  thrd_create(&blockThreadL, MzBlockHandlerF, NULL);
   errorL = Pa_StartStream(audioStreamL);
   if (errorL != paNoError) {
     MzPanicF(1, "could not start audio stream");
   }
-  thrd_t threadL;
-  thrd_create(&threadL, MzMidiHandlerF, streamL);
+  thrd_t midiThreadL;
+  thrd_create(&midiThreadL, MzMidiHandlerF, streamL);
   printf("> Press enter to exit session...\n");
   while (getchar() != '\n') {
   }
   MzSessionG.runningM = false;
-  thrd_join(threadL, NULL);
+  thrd_join(midiThreadL, NULL);
   errorL = Pa_StopStream(audioStreamL);
   if (errorL != paNoError) {
     MzPanicF(1, "could not stop audio stream");
   }
+  thrd_join(blockThreadL, NULL);
   Pm_Close(streamL);
   MzEndRTF();
   MzWaveBufferFreeF(&MzSessionG.waveBufferM);

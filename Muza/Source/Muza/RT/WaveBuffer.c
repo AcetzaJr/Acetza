@@ -7,6 +7,7 @@
 
 #include <glib.h>
 
+#include <stdio.h>
 #include <stdlib.h>
 
 void MzWaveBufferInitF(MzWaveBufferZ *bufferP, MzCountT blocksCountP,
@@ -36,6 +37,7 @@ void MzWaveBufferFreeF(MzWaveBufferZ *bufferP) {
 double MzWaveBufferNextSampleF(MzWaveBufferZ *bufferP) {
   if (bufferP->sampleIndexM >= bufferP->activeBlockM->samplesCountM) {
     if (!MzWaveBufferTrySwapF(bufferP)) {
+      printf("> Could not swap\n");
       return 0;
     }
   }
@@ -52,7 +54,7 @@ bool MzWaveBufferTrySwapF(MzWaveBufferZ *bufferP) {
   MzBufferBlockNotReadyF(swapL);
   g_async_queue_push(MzSessionG.blockQueueM, swapL);
   bufferP->activeBlockM = lastL;
-  for (MzIndexT i = bufferP->blocksCountM - 2; i >= 0; i--) {
+  for (MzSIndexT i = bufferP->blocksCountM - 2; i >= 0; i--) {
     bufferP->blocksM[i + 1] = bufferP->blocksM[i];
   }
   bufferP->blocksM[0] = swapL;

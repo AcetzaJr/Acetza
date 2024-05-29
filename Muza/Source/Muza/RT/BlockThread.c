@@ -8,10 +8,11 @@
 
 int MzBlockHandlerF(void * /*dataP*/) {
   while (MzSessionG.runningM) {
-    MzBufferBlockZ *blockL;
-    while ((blockL = g_async_queue_timeout_pop(MzSessionG.blockQueueM,
-                                               1'000'000)) == NULL) {
-    };
+    MzBufferBlockZ *blockL =
+        g_async_queue_timeout_pop(MzSessionG.blockQueueM, 1'000'000);
+    if (blockL == NULL) {
+      continue;
+    }
     blockL->isReadyM = true;
     printf("block processed\n");
   }
