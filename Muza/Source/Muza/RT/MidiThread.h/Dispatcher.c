@@ -58,7 +58,7 @@ void MzMidiSendEventF(PmEvent *eventP) {
         MzNoteOffEventCreateF(bytesL[0] & 0xf, bytesL[1], bytesL[2]));
     return;
   case 11:
-    if (bytesL[1] == 40) {
+    if (bytesL[1] == 64) {
       if (bytesL[2] < 64) {
         g_async_queue_push(MzSessionG.midiQueueM,
                            MzPedalOffEventCreateF(bytesL[0] & 0xf));
@@ -80,7 +80,7 @@ int MzMidiDispatcherF(void *streamP) {
   while (MzSessionG.runningM) {
     while ((countL = Pm_Read(streamL, bufferL, MzMidiBufferSizeD) > 0)) {
       for (int indexL = 0; indexL < countL; indexL++) {
-        MzMidiPrintEventF(&bufferL[indexL]);
+        MzMidiSendEventF(&bufferL[indexL]);
       }
     }
     thrd_sleep(&sleepTimeL, NULL);
@@ -88,4 +88,3 @@ int MzMidiDispatcherF(void *streamP) {
   MzMidiFlushF(streamL);
   return 0;
 }
-
