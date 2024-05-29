@@ -7,14 +7,14 @@
 #include <time.h>
 
 int MzBlockHandlerF(void * /*dataP*/) {
-  while (MzSessionG.runningM) {
+  while (MzSessionG.processingM) {
     MzBufferBlockZ *blockL =
-        g_async_queue_timeout_pop(MzSessionG.blockQueueM, 1'000'000);
+        g_async_queue_timeout_pop(MzSessionG.blockQueueM, 100'000);
     if (blockL == NULL) {
       continue;
     }
     blockL->isReadyM = true;
-    printf("block processed\n");
+    // printf("block processed\n");
   }
   return 0;
 }

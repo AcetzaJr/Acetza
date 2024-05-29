@@ -4,7 +4,7 @@
 #include "Muza/Wave.h"
 
 typedef struct {
-  MzPrimitiveFT primitiveM;
+  MzPrimitiveT primitiveM;
   MzFrequencyT frequencyM;
   MzDurationT durationM;
   MzAmplitudeT amplitudeM;

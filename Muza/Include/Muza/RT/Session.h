@@ -7,10 +7,12 @@
 
 typedef struct {
   GAsyncQueue *blockQueueM;
+  GAsyncQueue *midiQueueM;
   MzWaveBufferZ waveBufferM;
   MzFrameRateT frameRateM;
   MzChannelsT channelsCountM;
   bool runningM;
+  bool processingM;
 } MzSessionZ;
 
 extern MzSessionZ MzSessionG;

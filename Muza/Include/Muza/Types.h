@@ -46,8 +46,8 @@ typedef i64T MzNoteT;
 
 typedef i64T MzSIndexT;
 
-typedef MzSampleT (*MzPrimitiveFT)(MzPartT part);
+typedef MzSampleT (*MzPrimitiveT)(MzPartT part);
 
-typedef MzAmplitudeT (*MzTransformerFT)(MzPartT part);
+typedef MzAmplitudeT (*MzTransformerT)(MzPartT part);
 
-typedef MzIndexT (*MzNumbererFT)(MzIndexT index);
+typedef MzIndexT (*MzNumbererT)(MzIndexT index);

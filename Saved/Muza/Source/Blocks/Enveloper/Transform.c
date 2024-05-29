@@ -48,7 +48,7 @@ MzUntilZ MzUntilReleaseF(MzEnveloperZ *enveloperP, MzWaveZ *waveP,
   return untilL;
 }
 
-MzTransformResultZ MzTransformF(MzWaveZ *waveP, MzTransformerFT transformerP,
+MzTransformResultZ MzTransformF(MzWaveZ *waveP, MzTransformerT transformerP,
                                 MzTimeT startTimeP,
                                 MzAmplitudeT startAmplitudeP, MzTimeT endTimeP,
                                 MzAmplitudeT endAmplitudeP, MzTimeT limitP) {

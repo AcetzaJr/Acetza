@@ -1,12 +1,14 @@
 #include "Muza/RT/MidiThread.h"
 
 #include "Muza/Common.h"
+#include "Muza/RT/MidiEvent.h"
 #include "Muza/RT/Session.h"
 #include "Muza/RT/Util.h"
 
 #include <portmidi.h>
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <threads.h>
 #include <time.h>
 
@@ -16,7 +18,7 @@ void MzMidiFlushF(PortMidiStream *streamP) {
   }
 }
 
-void MzMidiHandleEventF(PmEvent *eventP) {
+void MzMidiPrintEventF(PmEvent *eventP) {
   // printf("time: %d\n", eventP->timestamp);
   u8T bytesL[4];
   bytesL[0] = eventP->message;
@@ -35,16 +37,50 @@ void MzMidiHandleEventF(PmEvent *eventP) {
   printf("}\n");
 }
 
-int MzMidiHandlerF(void *dataP) {
+void MzMidiSendEventF(PmEvent *eventP) {
+  // printf("time: %d\n", eventP->timestamp);
+  u8T bytesL[4];
+  bytesL[0] = eventP->message;
+  bytesL[1] = eventP->message >> 8;
+  bytesL[2] = eventP->message >> 16;
+  // bytesL[3] = eventP->message >> 24;
+  u8T halfByteL = bytesL[0] >> 4;
+  switch (halfByteL) {
+  // Note on
+  case 9:
+    g_async_queue_push(
+        MzSessionG.midiQueueM,
+        MzNoteOnEventCreateF(bytesL[0] & 0xf, bytesL[1], bytesL[2]));
+    return;
+  case 8:
+    g_async_queue_push(
+        MzSessionG.midiQueueM,
+        MzNoteOffEventCreateF(bytesL[0] & 0xf, bytesL[1], bytesL[2]));
+    return;
+  case 11:
+    if (bytesL[1] == 40) {
+      if (bytesL[2] < 64) {
+        g_async_queue_push(MzSessionG.midiQueueM,
+                           MzPedalOffEventCreateF(bytesL[0] & 0xf));
+      } else {
+        g_async_queue_push(MzSessionG.midiQueueM,
+                           MzPedalOnEventCreateF(bytesL[0] & 0xf));
+      }
+      return;
+    }
+  }
+}
+
+int MzMidiDispatcherF(void *streamP) {
   struct timespec sleepTimeL = {.tv_nsec = 16'000'000};
-  PortMidiStream *streamL = dataP;
+  PortMidiStream *streamL = streamP;
   Pm_SetChannelMask(streamL, Pm_Channel(0));
   PmEvent bufferL[MzMidiBufferSizeD];
   int countL;
   while (MzSessionG.runningM) {
     while ((countL = Pm_Read(streamL, bufferL, MzMidiBufferSizeD) > 0)) {
       for (int indexL = 0; indexL < countL; indexL++) {
-        MzMidiHandleEventF(&bufferL[indexL]);
+        MzMidiPrintEventF(&bufferL[indexL]);
       }
     }
     thrd_sleep(&sleepTimeL, NULL);
@@ -52,3 +88,4 @@ int MzMidiHandlerF(void *dataP) {
   MzMidiFlushF(streamL);
   return 0;
 }
+

@@ -18,7 +18,7 @@ typedef struct {
 MzUntilZ MzUntilReleaseF(MzEnveloperZ *enveloperP, MzWaveZ *waveP,
                          MzDurationT durationP);
 
-MzTransformResultZ MzTransformF(MzWaveZ *waveP, MzTransformerFT transformerP,
+MzTransformResultZ MzTransformF(MzWaveZ *waveP, MzTransformerT transformerP,
                                 MzTimeT startTimeP,
                                 MzAmplitudeT startAmplitudeP, MzTimeT endTimeP,
                                 MzAmplitudeT endAmplitudeP, MzTimeT limitP);

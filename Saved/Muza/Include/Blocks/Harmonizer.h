@@ -7,7 +7,7 @@
 typedef struct {
   MzBufferBlockZ *blockM;
   MzDepthT depthM;
-  MzNumbererFT numbererM;
+  MzNumbererT numbererM;
 } MzHarmonizerZ;
 
 extern MzHarmonizerZ MzHarmonizerG;

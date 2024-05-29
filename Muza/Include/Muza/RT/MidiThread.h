@@ -1,3 +1,5 @@
 #pragma once
 
-int MzMidiHandlerF(void *dataP);
+int MzMidiDispatcherF(void *streamP);
+
+int MzMidiHandlerF(void *);

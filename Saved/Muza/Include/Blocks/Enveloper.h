@@ -11,9 +11,9 @@ typedef struct {
   MzDecayT decayM;
   MzSustainT sustainM;
   MzReleaseT releaseM;
-  MzTransformerFT attackTransformerM;
-  MzTransformerFT decayTransformerM;
-  MzTransformerFT releaseTransformerM;
+  MzTransformerT attackTransformerM;
+  MzTransformerT decayTransformerM;
+  MzTransformerT releaseTransformerM;
 } MzEnveloperZ;
 
 extern MzEnveloperZ MzEnveloperG;
