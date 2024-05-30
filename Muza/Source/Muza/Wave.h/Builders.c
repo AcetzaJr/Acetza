@@ -1,5 +1,6 @@
 #include "Muza/Wave.h"
 
+#include "Muza/FrameRate.h"
 #include "Muza/Types.h"
 
 #include <stdlib.h>

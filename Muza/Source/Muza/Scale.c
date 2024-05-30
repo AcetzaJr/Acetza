@@ -1,5 +1,6 @@
 #include "Muza/Scale.h"
 
+#include "Muza/Common.h"
 #include "Muza/Math.h"
 #include "Muza/Types.h"
 
@@ -28,14 +29,16 @@ void MzAcetzaInitF(MzFrequencyT baseP) {
 }
 
 MzFrequencyT MzEqualTemperedF(MzNoteT noteP, MzFrequencyT baseP) {
-  return baseP * pow(2, noteP / 12);
+  return baseP * pow(2, (double)noteP / 12);
 }
 
-MzFrequencyT MzScalePowerF(MzNoteT noteP, MzCountT countP) {
+i64T MzScalePowerF(MzNoteT noteP, i64T countP) {
   return noteP < 0 ? (noteP + 1) / countP - 1 : noteP / countP;
 }
 
 MzFrequencyT MzScaleFrequencyF(MzScaleZ *scaleP, MzNoteT noteP) {
-  return scaleP->baseM * MzPosModi64F(noteP, scaleP->countM) *
-         pow(2, MzScalePowerF(noteP, scaleP->countM));
+  MzIndexT indexL = MzPosModi64F(noteP, (i64T)scaleP->countM);
+  // printf("index %lu\n", indexL);
+  return scaleP->baseM * scaleP->rationsM[indexL] *
+         pow(2, (MzFrequencyT)MzScalePowerF(noteP, (i64T)scaleP->countM));
 }

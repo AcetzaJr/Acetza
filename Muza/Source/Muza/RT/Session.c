@@ -8,6 +8,7 @@
 #include "Muza/RT/Synth/Synth.h"
 #include "Muza/RT/Util.h"
 #include "Muza/RT/WaveBuffer.h"
+#include "Muza/Scale.h"
 #include "Muza/Types.h"
 #include "glib.h"
 
@@ -46,6 +47,7 @@ void MzSessionStartF() {
       MzSessionG.channelsCountM);
   MzSessionG.blockQueueM = g_async_queue_new();
   MzSessionG.processingM = true;
+  MzAcetzaInitF(360);
   MzSessionG.synthM = MzSynthBasicCreate();
   GThread *blockThreadL = g_thread_new("Block", MzBlockHandlerF, NULL);
   errorL = Pa_StartStream(audioStreamL);

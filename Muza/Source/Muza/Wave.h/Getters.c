@@ -1,5 +1,6 @@
 #include "Muza/Wave.h"
 
+#include "Muza/FrameRate.h"
 #include "Muza/Types.h"
 
 MzSampleT *MzWaveSampleF(MzWaveZ *waveP, MzFrameT frameP, MzChannelT channelP) {

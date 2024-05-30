@@ -43,9 +43,3 @@ void MzWaveAddF(MzWaveZ *waveP, MzWaveZ *otherP, MzTimeT timeP,
 // IO
 
 void MzWaveSaveF(MzWaveZ *waveP, const char *pathP);
-
-// FrameRate
-
-MzIndexT MzTimeToFrameF(MzTimeT timeP, MzFrameRateT frameRateP);
-
-MzTimeT MzFrameToTimeF(MzIndexT frameP, MzFrameRateT frameRateP);

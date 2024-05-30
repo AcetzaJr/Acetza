@@ -2,7 +2,10 @@
 
 #include "Muza/Types.h"
 
+#include <glib.h>
+
 typedef struct {
+  GMutex samplesMutexM;
   MzSampleT *samplesM;
   MzCountT samplesCountM;
   MzFramesT framesCountM;
@@ -13,9 +16,14 @@ typedef struct {
 MzBufferBlockZ *MzBufferBlockCreateF(MzFramesT framesCountP,
                                      MzChannelsT channelsCountP);
 
-void MzBufferBlockInitF(MzBufferBlockZ *block, MzFramesT framesCountP,
+void MzBufferBlockInitF(MzBufferBlockZ *blockP, MzFramesT framesCountP,
                         MzChannelsT channelsCountP);
 
-void MzBufferBlockFreeF(MzBufferBlockZ *block);
+void MzBufferBlockFreeF(MzBufferBlockZ *blockP);
 
-void MzBufferBlockNotReadyF(MzBufferBlockZ *block);
+void MzBufferBlockNotReadyF(MzBufferBlockZ *blockP);
+
+MzSampleT *MzBufferBlockLock(MzBufferBlockZ *blockP, MzFrameT frameP,
+                             MzChannelT channelP);
+
+void MzBufferBlockUnLock(MzBufferBlockZ *blockP);

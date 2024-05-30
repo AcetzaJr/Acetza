@@ -1,17 +1,26 @@
 #pragma once
 
 #include "Muza/Constants.h"
+#include "Muza/RT/BufferBlock.h"
 #include "Muza/RT/Synth/Synth.h"
+#include "Muza/Types.h"
 
 #include <glib.h>
 
 typedef struct {
+  MzTimeT timeM;
+  MzFrequencyT frequencyM;
+  bool pressedM;
+} MzSynthBasicStateZ;
+
+typedef struct {
+  MzBufferBlockZ *blockM;
   GThreadPool *poolM;
   GThread *processingThreadM;
   GAsyncQueue *blockQueueM;
   GMutex processingMutexM;
   GMutex stateMutexM;
-  bool stateM[MzKeyCountD];
+  MzSynthBasicStateZ stateM[MzKeyCountD];
 } MzSynthBasicZ;
 
 MzSynthZ *MzSynthBasicCreate();
