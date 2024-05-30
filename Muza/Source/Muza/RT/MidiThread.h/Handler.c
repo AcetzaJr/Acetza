@@ -34,19 +34,15 @@ gpointer MzMidiHandlerF(gpointer /*dataP*/) {
     }
     switch (eventL->typeM) {
     case MzNoteOnEK:
-      printf("MzNoteOnEK\n");
       MzSendNoteOnF(eventL->eventM);
       break;
     case MzNoteOffEK:
-      printf("MzNoteOffEK\n");
       MzSendNoteOffF(eventL->eventM);
       break;
     case MzPedalOnEK:
-      printf("MzPedalOnEK\n");
       MzSendPedalOnF(eventL->eventM);
       break;
     case MzPedalOffEK:
-      printf("MzPedalOffEK\n");
       MzSendPedalOffF(eventL->eventM);
       break;
     }
