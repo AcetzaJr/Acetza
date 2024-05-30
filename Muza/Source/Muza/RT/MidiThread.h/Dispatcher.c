@@ -10,8 +10,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <threads.h>
-#include <time.h>
 
 void MzMidiFlushF(PortMidiStream *streamP) {
   PmEvent bufferL[MzMidiBufferSizeD];
@@ -72,7 +70,6 @@ void MzMidiSendEventF(PmEvent *eventP) {
 }
 
 gpointer MzMidiDispatcherF(gpointer streamP) {
-  struct timespec sleepTimeL = {.tv_nsec = 16'000'000};
   PortMidiStream *streamL = streamP;
   Pm_SetChannelMask(streamL, Pm_Channel(0));
   PmEvent bufferL[MzMidiBufferSizeD];
@@ -83,7 +80,7 @@ gpointer MzMidiDispatcherF(gpointer streamP) {
         MzMidiSendEventF(&bufferL[indexL]);
       }
     }
-    thrd_sleep(&sleepTimeL, NULL);
+    g_usleep(100);
   }
   MzMidiFlushF(streamL);
   return NULL;
