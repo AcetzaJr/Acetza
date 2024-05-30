@@ -1,5 +1,7 @@
 #pragma once
 
-int MzMidiDispatcherF(void *streamP);
+#include <glib.h>
 
-int MzMidiHandlerF(void *);
+gpointer MzMidiDispatcherF(gpointer streamP);
+
+gpointer MzMidiHandlerF(gpointer);

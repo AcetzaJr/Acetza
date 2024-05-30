@@ -3,7 +3,12 @@
 #include "Muza/Constants.h"
 #include "Muza/RT/Synth/Synth.h"
 
+#include <glib.h>
+
 typedef struct {
+  GThread *processingThreadM;
+  GAsyncQueue *blockQueueM;
+  GMutex processingMutexM;
   bool stateM[MzKeyCountD];
 } MzSynthBasicZ;
 
@@ -26,3 +31,5 @@ void MzSynthBasicEndProcessBlockF(void *dataP, void *synthP,
                                   MzBufferBlockZ *blockP);
 
 void MzSynthBasicFreeSynthF(void *dataP, void *synthP);
+
+gpointer MzSynthBasicProcessingThread(gpointer);

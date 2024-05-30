@@ -25,7 +25,7 @@ void MzSendPedalOffF(MzPedalOffEventZ *eventP) {
                                eventP->channelM);
 }
 
-int MzMidiHandlerF(void * /*dataP*/) {
+gpointer MzMidiHandlerF(gpointer /*dataP*/) {
   while (MzSessionG.runningM) {
     MzMidiEventZ *eventL =
         g_async_queue_timeout_pop(MzSessionG.midiQueueM, 100'000);
@@ -53,5 +53,5 @@ int MzMidiHandlerF(void * /*dataP*/) {
     MzMidiEventFreeF(eventL);
     // printf("block processed\n");
   }
-  return 0;
+  return NULL;
 }

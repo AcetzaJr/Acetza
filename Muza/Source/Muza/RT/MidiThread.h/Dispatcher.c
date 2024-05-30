@@ -4,6 +4,7 @@
 #include "Muza/RT/MidiEvent.h"
 #include "Muza/RT/Session.h"
 #include "Muza/RT/Util.h"
+#include "glib.h"
 
 #include <portmidi.h>
 
@@ -70,7 +71,7 @@ void MzMidiSendEventF(PmEvent *eventP) {
   }
 }
 
-int MzMidiDispatcherF(void *streamP) {
+gpointer MzMidiDispatcherF(gpointer streamP) {
   struct timespec sleepTimeL = {.tv_nsec = 16'000'000};
   PortMidiStream *streamL = streamP;
   Pm_SetChannelMask(streamL, Pm_Channel(0));
@@ -85,5 +86,5 @@ int MzMidiDispatcherF(void *streamP) {
     thrd_sleep(&sleepTimeL, NULL);
   }
   MzMidiFlushF(streamL);
-  return 0;
+  return NULL;
 }

@@ -45,30 +45,28 @@ void MzSessionStartF() {
   MzSessionG.blockQueueM = g_async_queue_new();
   MzSessionG.processingM = true;
   MzSessionG.synthM = MzSynthBasicCreate();
-  thrd_t blockThreadL;
-  thrd_create(&blockThreadL, MzBlockHandlerF, NULL);
+  GThread *blockThreadL = g_thread_new("Block", MzBlockHandlerF, NULL);
   errorL = Pa_StartStream(audioStreamL);
   if (errorL != paNoError) {
     MzPanicF(1, "could not start audio stream");
   }
   PortMidiStream *streamL = MzOpenMidiInputF(MzDefaultDeviceIDG);
   MzSessionG.midiQueueM = g_async_queue_new();
-  thrd_t midiHandlerThreadL;
-  thrd_create(&midiHandlerThreadL, MzMidiHandlerF, NULL);
-  thrd_t midiDispatcherThreadL;
-  thrd_create(&midiDispatcherThreadL, MzMidiDispatcherF, streamL);
+  GThread *midiHandlerThreadL = g_thread_new("Handler", MzMidiHandlerF, NULL);
+  GThread *midiDispatcherThreadL =
+      g_thread_new("Dispatcher", MzMidiDispatcherF, streamL);
   printf("> Press enter to exit session...\n");
   while (getchar() != '\n') {
   }
   MzSessionG.runningM = false;
-  thrd_join(midiDispatcherThreadL, NULL);
-  thrd_join(midiHandlerThreadL, NULL);
+  g_thread_join(midiDispatcherThreadL);
+  g_thread_join(midiHandlerThreadL);
   errorL = Pa_StopStream(audioStreamL);
   if (errorL != paNoError) {
     MzPanicF(1, "could not stop audio stream");
   }
   MzSessionG.processingM = false;
-  thrd_join(blockThreadL, NULL);
+  g_thread_join(blockThreadL);
   Pm_Close(streamL);
   MzEndRTF();
   MzWaveBufferFreeF(&MzSessionG.waveBufferM);

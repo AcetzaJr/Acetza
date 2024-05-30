@@ -1,3 +1,5 @@
 #pragma once
 
-int MzBlockHandlerF(void *dataP);
+#include <glib.h>
+
+gpointer MzBlockHandlerF(gpointer dataP);

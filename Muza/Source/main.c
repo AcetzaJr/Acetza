@@ -1,4 +1,8 @@
 
 #include "Muza/RT/Session.h"
 
-int main() { MzSessionStartF(); }
+#include <glib.h>
+
+void TestSessionF() { MzSessionStartF(); }
+
+int main() { TestSessionF(); }
