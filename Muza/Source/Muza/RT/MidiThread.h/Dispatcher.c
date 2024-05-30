@@ -46,7 +46,6 @@ void MzMidiSendEventF(PmEvent *eventP) {
   // bytesL[3] = eventP->message >> 24;
   u8T halfByteL = bytesL[0] >> 4;
   switch (halfByteL) {
-  // Note on
   case 9:
     g_async_queue_push(
         MzSessionG.midiQueueM,

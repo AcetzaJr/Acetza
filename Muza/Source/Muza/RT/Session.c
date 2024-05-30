@@ -4,6 +4,8 @@
 #include "Muza/RT/AudioCallback.h"
 #include "Muza/RT/BlockThread.h"
 #include "Muza/RT/MidiThread.h"
+#include "Muza/RT/Synth/Basic.h"
+#include "Muza/RT/Synth/Synth.h"
 #include "Muza/RT/Util.h"
 #include "Muza/RT/WaveBuffer.h"
 #include "glib.h"
@@ -42,6 +44,7 @@ void MzSessionStartF() {
                     MzSessionG.channelsCountM);
   MzSessionG.blockQueueM = g_async_queue_new();
   MzSessionG.processingM = true;
+  MzSessionG.synthM = MzSynthBasicCreate();
   thrd_t blockThreadL;
   thrd_create(&blockThreadL, MzBlockHandlerF, NULL);
   errorL = Pa_StartStream(audioStreamL);
@@ -70,4 +73,5 @@ void MzSessionStartF() {
   MzEndRTF();
   MzWaveBufferFreeF(&MzSessionG.waveBufferM);
   g_async_queue_unref(MzSessionG.blockQueueM);
+  MzSynthFreeF(MzSessionG.synthM);
 }
