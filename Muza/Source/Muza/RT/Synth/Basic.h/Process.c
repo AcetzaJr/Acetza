@@ -27,7 +27,24 @@ gpointer MzSynthBasicProcessingThread(gpointer synthP) {
     if (blockL == NULL) {
       continue;
     }
+    for (MzIndexT i = 0; i < MzKeyCountD; i++) {
+      bool stateL;
+      g_mutex_lock(&synthL->stateMutexM);
+      stateL = synthL->stateM[i];
+      g_mutex_unlock(&synthL->stateMutexM);
+      if (stateL) {
+        printf("push\n");
+        g_thread_pool_push(synthL->poolM, (gpointer)i, NULL);
+      }
+    }
     g_mutex_unlock(&synthL->processingMutexM);
   }
   return NULL;
+}
+
+void MzSynthBasicPoolF(gpointer dataP, gpointer userDataP) {
+  unsigned long dataL = (unsigned long)dataP;
+  printf("dataL %lu\n", dataL);
+  unsigned long userDataL = (unsigned long)userDataP;
+  printf("userDataL %lu\n", userDataL);
 }

@@ -21,25 +21,28 @@
     "MissingIncludes": "None",
     "ClangTidy": {
       "Add": [
-        "clang-diagnostic-*",
-        "clang-analyzer-*",
+        "clang-diagnostic*",
+        "clang-analyzer*",
         "llvm-*",
-        "performance-*",
-        "readability-*",
-        "cert-*",
-        "portability-*",
-        "misc-*",
-        "concurrency-*",
-        "google*"
+        "performance*",
+        "readability*",
+        "cert*",
+        "portability*",
+        "misc*",
+        "concurrency*",
+        "google*",
+        "bugprone*"
       ],
       "Remove": [
         "readability-magic-numbers",
         "misc-no-recursion",
         "concurrency-mt-unsafe",
         "cert-flp30-c",
-        "cert-err33-c"
+        "cert-err33-c",
+        "bugprone-easily-swappable-parameters",
+        "performance-no-int-to-ptr"
       ],
-      "FastCheckFilter": "None"
+      "FastCheckFilter": "Strict"
     }
   }
 }

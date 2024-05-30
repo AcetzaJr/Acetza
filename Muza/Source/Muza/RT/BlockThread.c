@@ -12,7 +12,7 @@ gpointer MzBlockHandlerF(gpointer /*dataP*/) {
     if (blockL == NULL) {
       continue;
     }
-    printf("processing block\n");
+    // rintf("processing block\n");
     MzSessionG.synthM->processBlockM(NULL, MzSessionG.synthM->synthM, blockL);
     MzSessionG.synthM->endProcessBlockM(NULL, MzSessionG.synthM->synthM,
                                         blockL);

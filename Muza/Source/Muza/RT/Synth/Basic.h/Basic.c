@@ -17,9 +17,11 @@ MzSynthZ *MzSynthBasicCreate() {
     synthL->stateM[i] = false;
   }
   g_mutex_init(&synthL->processingMutexM);
+  g_mutex_init(&synthL->stateMutexM);
   synthL->blockQueueM = g_async_queue_new();
   synthL->processingThreadM =
       g_thread_new("Prcessing", MzSynthBasicProcessingThread, synthL);
+  synthL->poolM = g_thread_pool_new(MzSynthBasicPoolF, synthL, -1, FALSE, NULL);
   return MzSynthCreateF(synthL, MzSynthBasicNoteOnF, MzSynthBasicNoteOffF,
                         MzSynthBasicPedalOnF, MzSynthBasicPedalOffF,
                         MzSynthBasicProcessBlockF, MzSynthBasicEndProcessBlockF,

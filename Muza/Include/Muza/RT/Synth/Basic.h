@@ -6,9 +6,11 @@
 #include <glib.h>
 
 typedef struct {
+  GThreadPool *poolM;
   GThread *processingThreadM;
   GAsyncQueue *blockQueueM;
   GMutex processingMutexM;
+  GMutex stateMutexM;
   bool stateM[MzKeyCountD];
 } MzSynthBasicZ;
 
@@ -33,3 +35,5 @@ void MzSynthBasicEndProcessBlockF(void *dataP, void *synthP,
 void MzSynthBasicFreeSynthF(void *dataP, void *synthP);
 
 gpointer MzSynthBasicProcessingThread(gpointer);
+
+void MzSynthBasicPoolF(gpointer dataP, gpointer userDataP);

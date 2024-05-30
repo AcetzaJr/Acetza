@@ -8,6 +8,7 @@
 #include "Muza/RT/Synth/Synth.h"
 #include "Muza/RT/Util.h"
 #include "Muza/RT/WaveBuffer.h"
+#include "Muza/Types.h"
 #include "glib.h"
 
 #include <portaudio.h>
@@ -29,19 +30,20 @@ void MzSessionStartF() {
   MzSessionG.runningM = true;
   PaStream *audioStreamL;
   PaError errorL = Pa_OpenDefaultStream(
-      &audioStreamL, 0, MzSessionG.channelsCountM, paFloat32,
-      MzSessionG.frameRateM, paFramesPerBufferUnspecified, MzAudioCallbackF,
-      NULL);
+      &audioStreamL, 0, (int)MzSessionG.channelsCountM, paFloat32,
+      (double)MzSessionG.frameRateM, paFramesPerBufferUnspecified,
+      MzAudioCallbackF, NULL);
   if (errorL != paNoError) {
     MzPanicF(1, "could not open audio stream");
   }
   const PaStreamInfo *info = Pa_GetStreamInfo(audioStreamL);
   // printf("outputLatency: %f\n", info->outputLatency);
   // printf("buffer: %f\n", info->outputLatency * 44'100 / 4);
-  MzWaveBufferInitF(&MzSessionG.waveBufferM, 2,
-                    info->outputLatency * MzSessionG.frameRateM /
-                        MzSessionG.channelsCountM,
-                    MzSessionG.channelsCountM);
+  MzWaveBufferInitF(
+      &MzSessionG.waveBufferM, 2,
+      (MzFramesT)(info->outputLatency * (double)MzSessionG.frameRateM /
+                  (double)MzSessionG.channelsCountM),
+      MzSessionG.channelsCountM);
   MzSessionG.blockQueueM = g_async_queue_new();
   MzSessionG.processingM = true;
   MzSessionG.synthM = MzSynthBasicCreate();
