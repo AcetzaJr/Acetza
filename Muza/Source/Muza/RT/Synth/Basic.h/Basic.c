@@ -1,5 +1,6 @@
 #include "Muza/RT/Synth/Basic.h"
 
+#include "Muza/Math.h"
 #include "Muza/Panic.h"
 #include "Muza/RT/Synth/Synth.h"
 #include "Muza/Scale.h"
@@ -16,8 +17,12 @@ MzSynthZ *MzSynthBasicCreate() {
   if (synthL == NULL) {
     MzPanicF(1, "MzSynthBasicCreate basicL is null");
   }
+  synthL->attackIncrementM = MzFromDBF(-40);
+  synthL->releaseDecrementM = MzFromDBF(-40);
+  synthL->releaseEpsilonM = MzFromDBF(-20);
   for (MzNoteT noteIndexL = 0; noteIndexL < MzKeyCountD; noteIndexL++) {
-    synthL->stateM[noteIndexL].pressedM = false;
+    synthL->stateM[noteIndexL].typeM = MzIdleEK;
+    synthL->stateM[noteIndexL].amplitudeM = 0;
     synthL->stateM[noteIndexL].timeM = 0;
     synthL->stateM[noteIndexL].frequencyM =
         MzScaleFrequencyF(&MzAcetzaG, noteIndexL - 62);

@@ -7,14 +7,20 @@
 
 #include <glib.h>
 
+typedef enum { MzIdleEK, MzAttackingEK, MzHoldingEK, MzReleasingEK } MzStateE;
+
 typedef struct {
   MzTimeT timeM;
   MzFrequencyT frequencyM;
   MzAmplitudeT amplitudeM;
-  bool pressedM;
+  MzAmplitudeT targetM;
+  MzStateE typeM;
 } MzSynthBasicStateZ;
 
 typedef struct {
+  MzAmplitudeT attackIncrementM;
+  MzAmplitudeT releaseDecrementM;
+  MzAmplitudeT releaseEpsilonM;
   MzBufferBlockZ *blockM;
   GThreadPool *poolM;
   GThread *processingThreadM;

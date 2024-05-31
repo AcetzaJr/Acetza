@@ -34,11 +34,11 @@ gpointer MzSynthBasicProcessingThread(gpointer synthP) {
     }
     MzCountT countL = 0;
     for (MzIndexT indexL = 0; indexL < MzKeyCountD; indexL++) {
-      bool pressedL;
+      MzStateE typeL;
       g_mutex_lock(&synthL->stateMutexM);
-      pressedL = synthL->stateM[indexL].pressedM;
+      typeL = synthL->stateM[indexL].typeM;
       g_mutex_unlock(&synthL->stateMutexM);
-      if (pressedL) {
+      if (typeL != MzIdleEK) {
         countL++;
         g_thread_pool_push(synthL->poolM, &synthL->stateM[indexL], NULL);
       }
@@ -53,7 +53,7 @@ gpointer MzSynthBasicProcessingThread(gpointer synthP) {
 
 void MzSynthBasicPoolF(gpointer dataP, gpointer userDataP) {
   MzSynthBasicStateZ *stateL = dataP;
-  // printf("frequencyL %f\n", stateL->frequencyM);
+  // printf("amplitudeM %f\n", stateL->amplitudeM);
   MzSynthBasicZ *synthL = userDataP;
   for (MzIndexT frameL = 0; frameL < synthL->blockM->framesCountM; frameL++) {
     MzTimeT timeL =
@@ -66,7 +66,27 @@ void MzSynthBasicPoolF(gpointer dataP, gpointer userDataP) {
       *ptrL += sampleL;
       MzBufferBlockUnLock(synthL->blockM);
     }
+    switch (stateL->typeM) {
+    case MzAttackingEK:
+      // printf("MzAttackingEK %f\n", stateL->amplitudeM);
+      stateL->amplitudeM += synthL->attackIncrementM / stateL->amplitudeM;
+      if (stateL->amplitudeM >= stateL->targetM) {
+        stateL->typeM = MzHoldingEK;
+        stateL->amplitudeM = stateL->targetM;
+      }
+      continue;
+    case MzReleasingEK:
+      // printf("MzReleasingEK %f\n", stateL->amplitudeM);
+      stateL->amplitudeM -= synthL->releaseDecrementM * stateL->amplitudeM;
+      if (stateL->amplitudeM < synthL->releaseEpsilonM) {
+        stateL->typeM = MzIdleEK;
+        goto exitLabel;
+      }
+      continue;
+    default:
+    }
   }
+exitLabel:
   stateL->timeM +=
       MzFrameToTimeF(synthL->blockM->framesCountM, MzSessionG.frameRateM);
   g_async_queue_push(synthL->stateQueueM, stateL);
