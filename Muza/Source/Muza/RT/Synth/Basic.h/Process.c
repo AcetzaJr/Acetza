@@ -92,7 +92,7 @@ void MzSynthBasicPoolF(gpointer dataP, gpointer userDataP) {
 exitLabel:
   stateL->timeM +=
       MzFrameToTimeF(synthL->blockM->framesCountM, MzSessionG.frameRateM);
-  // stateL->timeM = fmod(stateL->timeM, 1.0);
+  stateL->timeM = fmod(stateL->timeM, 360);
   // stateL->timeM -= floor(stateL->timeM);
   g_async_queue_push(synthL->stateQueueM, stateL);
   g_mutex_unlock(&stateL->mutexM);

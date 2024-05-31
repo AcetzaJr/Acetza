@@ -4,7 +4,7 @@
 
 #include "Muza/Types.h"
 
-MzDBT MzDBRangeG = 30;
+MzDBT MzDBRangeG = 20;
 MzDBT MzDBLimitG = 3;
 
 void MzSynthBasicNoteOnF(void * /*dataP*/, void *synthP, u8T /*channelP*/,
