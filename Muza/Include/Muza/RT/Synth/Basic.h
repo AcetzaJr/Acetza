@@ -10,6 +10,7 @@
 typedef struct {
   MzTimeT timeM;
   MzFrequencyT frequencyM;
+  MzAmplitudeT amplitudeM;
   bool pressedM;
 } MzSynthBasicStateZ;
 

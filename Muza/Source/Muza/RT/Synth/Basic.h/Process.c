@@ -54,13 +54,12 @@ gpointer MzSynthBasicProcessingThread(gpointer synthP) {
 void MzSynthBasicPoolF(gpointer dataP, gpointer userDataP) {
   MzSynthBasicStateZ *stateL = dataP;
   // printf("frequencyL %f\n", stateL->frequencyM);
-  MzAmplitudeT amplitudeL = 0.2;
   MzSynthBasicZ *synthL = userDataP;
   for (MzIndexT frameL = 0; frameL < synthL->blockM->framesCountM; frameL++) {
     MzTimeT timeL =
         stateL->timeM + MzFrameToTimeF(frameL, MzSessionG.frameRateM);
     MzPartT partL = fmod(timeL * stateL->frequencyM, 1.0);
-    MzSampleT sampleL = MzPrimitivesSinF(partL) * amplitudeL;
+    MzSampleT sampleL = MzPrimitivesSinF(partL) * stateL->amplitudeM;
     for (MzIndexT channelL = 0; channelL < synthL->blockM->channelsCountM;
          ++channelL) {
       MzSampleT *ptrL = MzBufferBlockLock(synthL->blockM, frameL, channelL);

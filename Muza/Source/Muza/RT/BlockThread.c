@@ -1,5 +1,6 @@
 #include "Muza/RT/BlockThread.h"
 
+#include "Muza/RT/Effects/HardLimit.h"
 #include "Muza/RT/Session.h"
 
 #include <stdio.h>
@@ -16,6 +17,7 @@ gpointer MzBlockHandlerF(gpointer /*dataP*/) {
     MzSessionG.synthM->processBlockM(NULL, MzSessionG.synthM->synthM, blockL);
     MzSessionG.synthM->endProcessBlockM(NULL, MzSessionG.synthM->synthM,
                                         blockL);
+    MzHardLimitF(blockL);
     blockL->isReadyM = true;
     // printf("block processed\n");
   }

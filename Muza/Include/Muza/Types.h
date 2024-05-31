@@ -4,6 +4,8 @@
 
 typedef f64T MzSampleT;
 
+typedef f64T MzDBT;
+
 typedef f64T MzPartT;
 
 typedef f64T MzAmplitudeT;
