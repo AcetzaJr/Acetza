@@ -31,22 +31,21 @@ void MzSessionStartF() {
   MzInitRTF();
   MzSessionG.runningM = true;
   PaStream *audioStreamL;
-  // MzSizeT bufferSizeL = 256;
+  MzSizeT bufferSizeL = 512;
   PaError errorL = Pa_OpenDefaultStream(
       &audioStreamL, 0, (int)MzSessionG.channelsCountM, paFloat32,
-      (double)MzSessionG.frameRateM, paFramesPerBufferUnspecified,
-      MzAudioCallbackF, NULL);
+      (double)MzSessionG.frameRateM, bufferSizeL, MzAudioCallbackF, NULL);
   if (errorL != paNoError) {
     MzPanicF(1, "could not open audio stream");
   }
-  const PaStreamInfo *info = Pa_GetStreamInfo(audioStreamL);
-  // printf("outputLatency: %f\n", info->outputLatency);
-  // printf("buffer: %f\n", info->outputLatency * 44'100 / 4);
-  MzSizeT latencyL =
-      (MzFramesT)(info->outputLatency * (double)MzSessionG.frameRateM /
-                  (double)MzSessionG.channelsCountM);
-  printf("latency %lu\n", latencyL);
-  MzWaveBufferInitF(&MzSessionG.waveBufferM, 1, latencyL,
+  // const PaStreamInfo *info = Pa_GetStreamInfo(audioStreamL);
+  //  printf("outputLatency: %f\n", info->outputLatency);
+  //  printf("buffer: %f\n", info->outputLatency * 44'100 / 4);
+  //  MzSizeT latencyL =
+  //     (MzFramesT)(info->outputLatency * (double)MzSessionG.frameRateM /
+  //                 (double)MzSessionG.channelsCountM);
+  //  printf("latency %lu\n", latencyL);
+  MzWaveBufferInitF(&MzSessionG.waveBufferM, 2, bufferSizeL,
                     MzSessionG.channelsCountM);
   MzSessionG.blockQueueM = g_async_queue_new();
   MzSessionG.processingM = true;

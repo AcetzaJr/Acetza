@@ -69,10 +69,18 @@ void MzSynthBasicPoolF(gpointer dataP, gpointer userDataP) {
     switch (stateL->typeM) {
     case MzAttackingEK:
       // printf("MzAttackingEK %f\n", stateL->amplitudeM);
-      stateL->amplitudeM += synthL->attackIncrementM * stateL->targetM;
-      if (stateL->amplitudeM >= stateL->targetM) {
-        stateL->typeM = MzHoldingEK;
-        stateL->amplitudeM = stateL->targetM;
+      if (stateL->amplitudeM > stateL->targetM) {
+        stateL->amplitudeM -= synthL->attackIncrementM * stateL->targetM;
+        if (stateL->amplitudeM <= stateL->targetM) {
+          stateL->typeM = MzHoldingEK;
+          stateL->amplitudeM = stateL->targetM;
+        }
+      } else {
+        stateL->amplitudeM += synthL->attackIncrementM * stateL->targetM;
+        if (stateL->amplitudeM >= stateL->targetM) {
+          stateL->typeM = MzHoldingEK;
+          stateL->amplitudeM = stateL->targetM;
+        }
       }
       break;
     case MzReleasingEK:

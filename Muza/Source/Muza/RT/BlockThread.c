@@ -19,7 +19,7 @@ gpointer MzBlockHandlerF(gpointer /*dataP*/) {
     MzSessionG.synthM->endProcessBlockM(NULL, MzSessionG.synthM->synthM,
                                         blockL);
     MzHardLimitF(blockL);
-    // MzWaveAppendBlockF(&MzSessionG.waveM, blockL);
+    MzWaveAppendBlockF(&MzSessionG.waveM, blockL);
     blockL->isReadyM = true;
     // printf("block processed\n");
   }
