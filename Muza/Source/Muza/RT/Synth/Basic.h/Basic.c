@@ -25,7 +25,7 @@ MzSynthZ *MzSynthBasicCreate() {
     synthL->stateM[noteIndexL].amplitudeM = 0;
     synthL->stateM[noteIndexL].frameM = 0;
     synthL->stateM[noteIndexL].frequencyM =
-        MzScaleFrequencyF(&MzAcetzaG, noteIndexL - 62);
+        MzScaleFrequencyF(&MzEqualTemperedG, noteIndexL - 62);
     g_mutex_init(&synthL->stateM[noteIndexL].mutexM);
     // printf("frequency %f\n", synthL->stateM[noteIndexL].frequencyM);
   }

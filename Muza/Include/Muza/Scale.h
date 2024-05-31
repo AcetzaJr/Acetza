@@ -9,8 +9,11 @@ typedef struct {
 } MzScaleZ;
 
 extern MzScaleZ MzAcetzaG;
+extern MzScaleZ MzEqualTemperedG;
 
 void MzAcetzaInitF(MzFrequencyT baseP);
+
+void MzEqualTemperedInitF(MzFrequencyT baseP);
 
 MzFrequencyT MzScaleFrequencyF(MzScaleZ *scaleP, MzNoteT noteP);
 

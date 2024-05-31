@@ -51,6 +51,7 @@ void MzSessionStartF() {
   MzSessionG.blockQueueM = g_async_queue_new();
   MzSessionG.processingM = true;
   MzAcetzaInitF(MzEqualTemperedF(5, 440));
+  MzEqualTemperedInitF(MzEqualTemperedF(5, 440));
   printf("base %f\n", MzAcetzaG.baseM);
   MzSessionG.synthM = MzSynthBasicCreate();
   MzWaveEmptyF(&MzSessionG.waveM, MzSessionG.channelsCountM,

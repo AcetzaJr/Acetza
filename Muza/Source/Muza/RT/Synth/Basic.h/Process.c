@@ -81,6 +81,7 @@ void MzSynthBasicPoolF(gpointer dataP, gpointer userDataP) {
       if (stateL->amplitudeM <= 0) {
         stateL->typeM = MzIdleEK;
         stateL->amplitudeM = 0;
+        stateL->frameM = 0;
         goto exitLabel;
       }
       break;
@@ -90,7 +91,6 @@ void MzSynthBasicPoolF(gpointer dataP, gpointer userDataP) {
   }
 exitLabel:
   // stateL->frameM += synthL->blockM->framesCountM;
-  stateL->frameM %= MzSessionG.frameRateM;
   // stateL->timeM -= floor(stateL->timeM);
   g_async_queue_push(synthL->stateQueueM, stateL);
   g_mutex_unlock(&stateL->mutexM);
