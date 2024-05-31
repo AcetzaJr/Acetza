@@ -32,15 +32,19 @@ gpointer MzSynthBasicProcessingThread(gpointer synthP) {
     if (synthL->blockM == NULL) {
       continue;
     }
-    for (MzIndexT i = 0; i < MzKeyCountD; i++) {
+    MzCountT countL = 0;
+    for (MzIndexT indexL = 0; indexL < MzKeyCountD; indexL++) {
       bool pressedL;
       g_mutex_lock(&synthL->stateMutexM);
-      pressedL = synthL->stateM[i].pressedM;
+      pressedL = synthL->stateM[indexL].pressedM;
       g_mutex_unlock(&synthL->stateMutexM);
       if (pressedL) {
-        // printf("push\n");
-        g_thread_pool_push(synthL->poolM, &synthL->stateM[i], NULL);
+        countL++;
+        g_thread_pool_push(synthL->poolM, &synthL->stateM[indexL], NULL);
       }
+    }
+    for (MzIndexT indexL = 0; indexL < countL; indexL++) {
+      g_async_queue_pop(synthL->stateQueueM);
     }
     g_mutex_unlock(&synthL->processingMutexM);
   }
@@ -66,4 +70,5 @@ void MzSynthBasicPoolF(gpointer dataP, gpointer userDataP) {
   }
   stateL->timeM +=
       MzFrameToTimeF(synthL->blockM->framesCountM, MzSessionG.frameRateM);
+  g_async_queue_push(synthL->stateQueueM, stateL);
 }

@@ -10,5 +10,6 @@ void MzSynthBasicFreeSynthF(void * /*dataP*/, void *synthP) {
   g_mutex_clear(&synthL->processingMutexM);
   g_mutex_clear(&synthL->stateMutexM);
   g_async_queue_unref(synthL->blockQueueM);
+  g_async_queue_unref(synthL->stateQueueM);
   free(synthL);
 }

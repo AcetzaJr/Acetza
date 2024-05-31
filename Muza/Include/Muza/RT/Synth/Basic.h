@@ -18,6 +18,7 @@ typedef struct {
   GThreadPool *poolM;
   GThread *processingThreadM;
   GAsyncQueue *blockQueueM;
+  GAsyncQueue *stateQueueM;
   GMutex processingMutexM;
   GMutex stateMutexM;
   MzSynthBasicStateZ stateM[MzKeyCountD];
