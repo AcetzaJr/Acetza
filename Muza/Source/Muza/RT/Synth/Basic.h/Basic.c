@@ -18,14 +18,14 @@ MzSynthZ *MzSynthBasicCreate() {
     MzPanicF(1, "MzSynthBasicCreate basicL is null");
   }
   synthL->attackIncrementM = MzFromDBF(-20);
-  synthL->releaseDecrementM = MzFromDBF(-45);
+  synthL->releaseDecrementM = MzFromDBF(-42);
   synthL->releaseEpsilonM = MzFromDBF(-20);
   for (MzNoteT noteIndexL = 0; noteIndexL < MzKeyCountD; noteIndexL++) {
     synthL->stateM[noteIndexL].typeM = MzIdleEK;
     synthL->stateM[noteIndexL].amplitudeM = 0;
     synthL->stateM[noteIndexL].frameM = 0;
     synthL->stateM[noteIndexL].frequencyM =
-        MzScaleFrequencyF(&MzEqualTemperedG, noteIndexL - 62);
+        MzScaleFrequencyF(&MzAcetzaG, noteIndexL - 62);
     g_mutex_init(&synthL->stateM[noteIndexL].mutexM);
     // printf("frequency %f\n", synthL->stateM[noteIndexL].frequencyM);
   }
