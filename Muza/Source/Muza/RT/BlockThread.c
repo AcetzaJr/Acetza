@@ -2,6 +2,7 @@
 
 #include "Muza/RT/Effects/HardLimit.h"
 #include "Muza/RT/Session.h"
+// #include "Muza/Wave.h"
 
 #include <stdio.h>
 #include <time.h>
@@ -18,6 +19,7 @@ gpointer MzBlockHandlerF(gpointer /*dataP*/) {
     MzSessionG.synthM->endProcessBlockM(NULL, MzSessionG.synthM->synthM,
                                         blockL);
     MzHardLimitF(blockL);
+    // MzWaveAppendBlockF(&MzSessionG.waveM, blockL);
     blockL->isReadyM = true;
     // printf("block processed\n");
   }

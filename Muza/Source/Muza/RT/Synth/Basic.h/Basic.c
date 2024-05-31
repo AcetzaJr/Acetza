@@ -17,15 +17,16 @@ MzSynthZ *MzSynthBasicCreate() {
   if (synthL == NULL) {
     MzPanicF(1, "MzSynthBasicCreate basicL is null");
   }
-  synthL->attackIncrementM = MzFromDBF(-40);
-  synthL->releaseDecrementM = MzFromDBF(-40);
-  synthL->releaseEpsilonM = MzFromDBF(-40);
+  synthL->attackIncrementM = MzFromDBF(-10);
+  synthL->releaseDecrementM = MzFromDBF(-45);
+  synthL->releaseEpsilonM = MzFromDBF(-20);
   for (MzNoteT noteIndexL = 0; noteIndexL < MzKeyCountD; noteIndexL++) {
     synthL->stateM[noteIndexL].typeM = MzIdleEK;
     synthL->stateM[noteIndexL].amplitudeM = 0;
     synthL->stateM[noteIndexL].timeM = 0;
     synthL->stateM[noteIndexL].frequencyM =
         MzScaleFrequencyF(&MzAcetzaG, noteIndexL - 62);
+    g_mutex_init(&synthL->stateM[noteIndexL].mutexM);
     // printf("frequency %f\n", synthL->stateM[noteIndexL].frequencyM);
   }
   g_mutex_init(&synthL->processingMutexM);

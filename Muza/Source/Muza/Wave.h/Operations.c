@@ -1,4 +1,5 @@
 #include "Muza/Panic.h"
+#include "Muza/RT/BufferBlock.h"
 #include "Muza/Wave.h"
 
 #include "Muza/FrameRate.h"
@@ -6,6 +7,19 @@
 
 #include <stdlib.h>
 #include <sys/param.h>
+
+void MzWaveAppendBlockF(MzWaveZ *waveP, MzBufferBlockZ *blockP) {
+  MzIndexT startL = waveP->framesM;
+  MzWaveResizeF(waveP, waveP->framesM + blockP->framesCountM);
+  for (MzIndexT frameL = startL, blockFrameL = 0;
+       blockFrameL < blockP->framesCountM; frameL++, blockFrameL++) {
+    for (MzIndexT channelL = 0; channelL < waveP->channelsM; channelL++) {
+      *MzWaveSampleF(waveP, frameL, channelL) =
+          *MzBufferBlockLock(blockP, blockFrameL, channelL);
+      MzBufferBlockUnLock(blockP);
+    }
+  }
+}
 
 void MzWaveAddF(MzWaveZ *waveP, MzWaveZ *otherP, MzTimeT timeP,
                 MzAmplitudeT amplitude) {

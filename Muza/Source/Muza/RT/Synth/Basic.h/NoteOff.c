@@ -3,7 +3,8 @@
 void MzSynthBasicNoteOffF(void * /*dataP*/, void *synthP, u8T /*channelP*/,
                           u8T keyP, u8T /*velocityP*/) {
   MzSynthBasicZ *synthL = synthP;
-  g_mutex_lock(&synthL->stateMutexM);
-  synthL->stateM[keyP].typeM = MzReleasingEK;
-  g_mutex_unlock(&synthL->stateMutexM);
+  MzSynthBasicStateZ *stateL = &synthL->stateM[keyP];
+  g_mutex_lock(&stateL->mutexM);
+  stateL->typeM = MzReleasingEK;
+  g_mutex_unlock(&stateL->mutexM);
 }

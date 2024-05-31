@@ -1,15 +1,21 @@
+#include "Muza/Common.h"
 #include "Muza/Math.h"
 #include "Muza/RT/Synth/Basic.h"
 
 #include "Muza/Types.h"
 
+MzDBT MzDBRangeG = 30;
+MzDBT MzDBLimitG = 3;
+
 void MzSynthBasicNoteOnF(void * /*dataP*/, void *synthP, u8T /*channelP*/,
                          u8T keyP, u8T velocityP) {
   MzSynthBasicZ *synthL = synthP;
-  g_mutex_lock(&synthL->stateMutexM);
-  synthL->stateM[keyP].typeM = MzAttackingEK;
-  MzDBT targetL = (MzDBT)velocityP / 127.0 * 20.0 - 20.0 - 6.0;
-  synthL->stateM[keyP].targetM = MzFromDBF(targetL);
+  MzSynthBasicStateZ *stateL = &synthL->stateM[keyP];
+  g_mutex_lock(&stateL->mutexM);
+  stateL->typeM = MzAttackingEK;
+  MzDBT targetL =
+      (MzDBT)velocityP / 127.0 * MzDBRangeG - MzDBRangeG - MzDBLimitG;
+  stateL->targetM = MzFromDBF(targetL);
   // printf("%f\n", synthL->stateM[keyP].targetM);
-  g_mutex_unlock(&synthL->stateMutexM);
+  g_mutex_unlock(&stateL->mutexM);
 }

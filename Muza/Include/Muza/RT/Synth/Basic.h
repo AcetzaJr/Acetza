@@ -7,7 +7,13 @@
 
 #include <glib.h>
 
-typedef enum { MzIdleEK, MzAttackingEK, MzHoldingEK, MzReleasingEK } MzStateE;
+typedef enum {
+  MzIdleEK,
+  MzAttackingEK,
+  MzHoldingEK,
+  MzReleasingEK,
+  MzEndingEK
+} MzStateE;
 
 typedef struct {
   MzTimeT timeM;
@@ -15,6 +21,7 @@ typedef struct {
   MzAmplitudeT amplitudeM;
   MzAmplitudeT targetM;
   MzStateE typeM;
+  GMutex mutexM;
 } MzSynthBasicStateZ;
 
 typedef struct {

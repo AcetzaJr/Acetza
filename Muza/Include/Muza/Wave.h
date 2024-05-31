@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Muza/RT/BufferBlock.h"
 #include "Muza/Types.h"
 
 typedef struct {
@@ -28,6 +29,8 @@ MzAmplitudeT MzWaveMaxF(MzWaveZ *waveP);
 MzDurationT MzWaveDurationF(MzWaveZ *waveP);
 
 // Operations
+
+void MzWaveAppendBlockF(MzWaveZ *waveP, MzBufferBlockZ *blockP);
 
 void MzWaveNormalizeF(MzWaveZ *waveP);
 
