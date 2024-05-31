@@ -19,7 +19,7 @@ MzSynthZ *MzSynthBasicCreate() {
   }
   synthL->attackIncrementM = MzFromDBF(-40);
   synthL->releaseDecrementM = MzFromDBF(-40);
-  synthL->releaseEpsilonM = MzFromDBF(-20);
+  synthL->releaseEpsilonM = MzFromDBF(-40);
   for (MzNoteT noteIndexL = 0; noteIndexL < MzKeyCountD; noteIndexL++) {
     synthL->stateM[noteIndexL].typeM = MzIdleEK;
     synthL->stateM[noteIndexL].amplitudeM = 0;
