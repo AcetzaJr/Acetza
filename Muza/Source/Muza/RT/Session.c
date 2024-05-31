@@ -47,7 +47,8 @@ void MzSessionStartF() {
       MzSessionG.channelsCountM);
   MzSessionG.blockQueueM = g_async_queue_new();
   MzSessionG.processingM = true;
-  MzAcetzaInitF(360);
+  MzAcetzaInitF(MzEqualTemperedF(5, 440));
+  printf("base %f\n", MzAcetzaG.baseM);
   MzSessionG.synthM = MzSynthBasicCreate();
   GThread *blockThreadL = g_thread_new("Block", MzBlockHandlerF, NULL);
   errorL = Pa_StartStream(audioStreamL);
