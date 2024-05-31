@@ -16,7 +16,7 @@ typedef enum {
 } MzStateE;
 
 typedef struct {
-  MzTimeT timeM;
+  MzIndexT frameM;
   MzFrequencyT frequencyM;
   MzAmplitudeT amplitudeM;
   MzAmplitudeT targetM;

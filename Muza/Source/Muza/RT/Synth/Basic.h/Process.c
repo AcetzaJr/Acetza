@@ -57,8 +57,7 @@ void MzSynthBasicPoolF(gpointer dataP, gpointer userDataP) {
   g_mutex_lock(&stateL->mutexM);
   MzSynthBasicZ *synthL = userDataP;
   for (MzIndexT frameL = 0; frameL < synthL->blockM->framesCountM; frameL++) {
-    MzTimeT timeL =
-        stateL->timeM + MzFrameToTimeF(frameL, MzSessionG.frameRateM);
+    MzTimeT timeL = MzFrameToTimeF(stateL->frameM++, MzSessionG.frameRateM);
     MzPartT partL = fmod(timeL * stateL->frequencyM, 1.0);
     MzSampleT sampleL = MzPrimitivesSinF(partL) * stateL->amplitudeM;
     for (MzIndexT channelL = 0; channelL < synthL->blockM->channelsCountM;
@@ -90,9 +89,8 @@ void MzSynthBasicPoolF(gpointer dataP, gpointer userDataP) {
     }
   }
 exitLabel:
-  stateL->timeM +=
-      MzFrameToTimeF(synthL->blockM->framesCountM, MzSessionG.frameRateM);
-  stateL->timeM = fmod(stateL->timeM, 360);
+  // stateL->frameM += synthL->blockM->framesCountM;
+  stateL->frameM %= MzSessionG.frameRateM;
   // stateL->timeM -= floor(stateL->timeM);
   g_async_queue_push(synthL->stateQueueM, stateL);
   g_mutex_unlock(&stateL->mutexM);
