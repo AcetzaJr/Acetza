@@ -80,7 +80,7 @@ gpointer MzMidiDispatcherF(gpointer streamP) {
         MzMidiSendEventF(&bufferL[indexL]);
       }
     }
-    g_usleep(100);
+    g_usleep(1'000);
   }
   MzMidiFlushF(streamL);
   return NULL;
